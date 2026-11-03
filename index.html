@@ -154,6 +154,20 @@ h1.gtitle{margin:0;font-size:26px}
   .offer{grid-template-columns:1fr}
   .pinfo{justify-content:flex-start}
 }
+
+.seller{display:flex;gap:10px;align-items:center}
+.ava{width:44px;height:44px;border-radius:50%;background:#e9ecf2;flex:none}
+.hearts{color:#ff4d4f;letter-spacing:2px}
+.qrow{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+input[type=number].qty{width:110px;padding:5px 8px;font-size:14px;border-radius:4px}
+.offer .rv{color:var(--accent)}
+.offer .mm{font-size:13px;margin-top:6px}
+.offer .mm div{display:inline-block;margin-right:16px}
+.offer .seller,.offer > div:nth-child(2){font-size:13px;line-height:1.9}
+.hist{cursor:pointer}
+.hdd{left:auto;right:0;min-width:260px}
+.htip{font-size:13px;color:var(--muted);padding:4px 6px 8px}
+input[type=text].qsin.search{padding-left:34px}
 </style>
 </head>
 <body>
@@ -177,7 +191,7 @@ h1.gtitle{margin:0;font-size:26px}
 <main class="wrap" style="padding-top:16px">
   <div class="gamehead">
     <div class="gl"><div class="glogo">AION 2</div><div><h1 class="gtitle" data-i18n="game_title">Aion 2 International Server</h1><div class="gsub" data-i18n="game_sub">Online game</div></div></div>
-    <div class="gr"><button class="reset" type="button" id="reset" data-i18n="reset">Reset all</button><span class="hist" data-i18n="history">Filter history</span></div>
+    <div class="gr"><button class="reset" type="button" id="reset" data-i18n="reset">Reset all</button><span class="ddw" id="histw"><span class="hist" id="histbtn" data-i18n="history">Filter history</span><div class="ddm hdd"><div class="htip"><b data-i18n="history">Filter history</b> <span data-i18n="hist_tip">(last 10)</span></div><div id="histlist"></div></div></span></div>
   </div>
   <div class="panel">
     <div class="row"><div class="lbl" data-i18n="f_type">Product type</div><div class="chips" id="types"></div></div>
@@ -268,6 +282,7 @@ var T = {
     pink:"Pink Diamonds", account:"Game accounts", gear:"Gear", enh:"Enhancement stones", brk:"Breakthrough stones", alt:"Alt accounts", other:"Other", misc:"Misc", cdk:"CDK", topup:"Game top-up", merchant:"Merchant leveling", price_h:"Price range", ship_h:"Deliveries", multi:"Multiple trades", single:"Single trade", part_h:"Partial delivery", nopart:"Not supported", part:"Supported", more_h:"Other options", guarantee:"Service guarantee", ttype:"Trade type", quick_h:"Quick search", ok:"OK", search_btn:"Search", history:"Filter history",
     found:"Found {n} listings", sort_default:"Default", sort_ratio:"Best rate", sort_new:"Newest", lbl_type:"Type", lbl_min:"Min. order", lbl_stock:"Stock", per_unit:"per 10,000 Kinah", rate:"1 {c} = {x} × 10,000 Kinah", buy:"Buy now", empty:"No listings match your selection.",
     rate_l:"Completion rate", credit_l:"Credit", srv_l:"Server", sell:"Sell with us", perpage:"20 / page", goto:"Go to", page_w:"page", next:"Next", last:"Last", pages:"{n} pages", unit10k:"10,000 Kinah = {c}{x}", g1_t:"Timeout compensation", g1_d:"Funds protected for safer trades", g2_t:"Security", g2_d:"Anti-theft measures keep trades safe", g3_t:"Professional team", g3_d:"Efficient guidance through every trade", g4_t:"24/7 support", g4_d:"Friendly support all year round", h1:"Getting started", h1_0:"Escrow trade", h1_1:"Consignment trade", h1_2:"Contact support", h1_3:"Log in", h2:"Buying", h2_0:"Search items", h2_1:"Buy items", h2_2:"Ask for a lower price", h2_3:"Store items", h3:"Selling", h3_0:"Post items", h3_1:"Sell to buyers", h3_2:"Manage items", h3_3:"Edit items", h4:"Account security", h4_0:"ID verification", h4_1:"Bind phone", h4_2:"Change email", h4_3:"Payment password", h4_4:"Change phone", h4_5:"Change login password", h5:"Terms", h5_0:"Privacy policy", h5_1:"Terms of service", l1:"About us", l2:"Contact us", l3:"Feedback", l4:"Careers", l5:"Business license", l6:"Disclaimer", l7:"Affiliate program", l8:"Member club", l9:"Support center", l10:"Back to top", o_g1:"Permanent compensation", o_g2:"Security guarantee", o_g3:"Deposit compensation", o_g4:"Verified merchant", o_g5:"Transfer supported", o_t1:"Support delivery", o_t2:"Seller delivery", guarantee:"Service guarantee", ttype:"Trade type", crumb:"Home  >  Game list  >  Listings  >  Aion 2 International", hotline:"24/7 hotline", online:"Online chat 24/7", chat:"Chat online", qty:"{q} Kinah = {c}{p}",
+    qty_ph:"Amount", unit_w:"× 10,000 Kinah", hist_tip:"(last 10)", hist_none:"No filter history yet",
     sel_h:"Build your order", f_type:"Product type", kinah:"Kinah", f_region:"Region", f_faction:"Faction", all:"All", f_world:"Game server",
     search_ph:"Search", collapse:"Collapse", expand:"Expand",
     world_note:"Server names for this selection are not listed yet. Choose All and tell us your game server when you contact us.",
@@ -302,6 +317,7 @@ var T = {
     found:"{n} resultados", sort_default:"Predeterminado", sort_ratio:"Mejor tasa", sort_new:"Más recientes", lbl_type:"Tipo", lbl_min:"Pedido mínimo", lbl_stock:"Stock", per_unit:"por 10.000 Kinah", rate:"1 {c} = {x} × 10.000 Kinah", buy:"Comprar ahora", empty:"No hay ofertas para tu selección.",
     rate_l:"Tasa de éxito", credit_l:"Crédito", srv_l:"Servidor", sell:"Vender", perpage:"20 / página", goto:"Ir a", page_w:"página", next:"Siguiente", last:"Última", pages:"{n} páginas", unit10k:"10.000 Kinah = {c}{x}",
     g1_t:"Compensación por retraso", g1_d:"Fondos protegidos, compras más seguras", g2_t:"Seguridad", g2_d:"Medidas antirrobo para operaciones seguras", g3_t:"Equipo profesional", g3_d:"Te guiamos en cada operación", g4_t:"Soporte 24/7", g4_d:"Atención amable todo el año", h1:"Primeros pasos", h1_0:"Compra con garantía", h1_1:"Venta en consignación", h1_2:"Contactar soporte", h1_3:"Iniciar sesión", h2:"Comprar", h2_0:"Buscar artículos", h2_1:"Comprar artículos", h2_2:"Pedir rebaja", h2_3:"Artículos de la tienda", h3:"Vender", h3_0:"Publicar artículos", h3_1:"Vender a compradores", h3_2:"Gestionar artículos", h3_3:"Editar artículos", h4:"Seguridad de la cuenta", h4_0:"Verificación de identidad", h4_1:"Vincular teléfono", h4_2:"Cambiar correo", h4_3:"Contraseña de pago", h4_4:"Cambiar teléfono", h4_5:"Cambiar contraseña", h5:"Términos", h5_0:"Política de privacidad", h5_1:"Términos del servicio", l1:"Sobre nosotros", l2:"Contacto", l3:"Sugerencias", l4:"Empleo", l5:"Licencia comercial", l6:"Aviso legal", l7:"Programa de afiliados", l8:"Club de miembros", l9:"Centro de ayuda", l10:"Volver arriba", o_g1:"Compensación permanente", o_g2:"Garantía de seguridad", o_g3:"Compensación con depósito", o_g4:"Comerciante verificado", o_g5:"Transferencia admitida", o_t1:"Entrega por soporte", o_t2:"Entrega por el vendedor", crumb:"Inicio  >  Juegos  >  Ofertas  >  Aion 2 Internacional", hotline:"Línea 24/7", online:"Chat en línea 24/7", chat:"Chatear", qty:"{q} Kinah = {c}{p}",
+    qty_ph:"Cantidad", unit_w:"× 10.000 Kinah", hist_tip:"(últimos 10)", hist_none:"Aún no hay historial",
     sel_h:"Arma tu pedido", f_type:"Tipo de producto", kinah:"Kinah", f_region:"Región", f_faction:"Facción", all:"Todos", f_world:"Servidor de juego",
     search_ph:"Buscar", collapse:"Contraer", expand:"Expandir",
     world_note:"Aún no hay nombres de servidor para esta selección. Elige Todos y dinos tu servidor de juego al contactarnos.",
@@ -336,6 +352,7 @@ var T = {
     found:"{n} resultados", sort_default:"Padrão", sort_ratio:"Melhor taxa", sort_new:"Mais recentes", lbl_type:"Tipo", lbl_min:"Pedido mínimo", lbl_stock:"Estoque", per_unit:"por 10.000 Kinah", rate:"1 {c} = {x} × 10.000 Kinah", buy:"Comprar agora", empty:"Nenhuma oferta para sua seleção.",
     rate_l:"Taxa de conclusão", credit_l:"Crédito", srv_l:"Servidor", sell:"Vender", perpage:"20 / página", goto:"Ir para", page_w:"página", next:"Próxima", last:"Última", pages:"{n} páginas", unit10k:"10.000 Kinah = {c}{x}",
     g1_t:"Compensação por atraso", g1_d:"Fundos protegidos, compras mais seguras", g2_t:"Segurança", g2_d:"Medidas antirroubo para negociações seguras", g3_t:"Equipe profissional", g3_d:"Orientação eficiente em cada negociação", g4_t:"Suporte 24/7", g4_d:"Atendimento atencioso o ano todo", h1:"Primeiros passos", h1_0:"Negociação com garantia", h1_1:"Venda em consignação", h1_2:"Falar com o suporte", h1_3:"Entrar", h2:"Comprar", h2_0:"Buscar itens", h2_1:"Comprar itens", h2_2:"Pedir desconto", h2_3:"Itens da loja", h3:"Vender", h3_0:"Anunciar itens", h3_1:"Vender a compradores", h3_2:"Gerenciar itens", h3_3:"Editar itens", h4:"Segurança da conta", h4_0:"Verificação de identidade", h4_1:"Vincular telefone", h4_2:"Alterar e-mail", h4_3:"Senha de pagamento", h4_4:"Alterar telefone", h4_5:"Alterar senha de login", h5:"Termos", h5_0:"Política de privacidade", h5_1:"Termos de serviço", l1:"Sobre nós", l2:"Fale conosco", l3:"Sugestões", l4:"Carreiras", l5:"Licença comercial", l6:"Aviso legal", l7:"Programa de afiliados", l8:"Clube de membros", l9:"Central de ajuda", l10:"Voltar ao topo", o_g1:"Compensação permanente", o_g2:"Garantia de segurança", o_g3:"Compensação por depósito", o_g4:"Lojista verificado", o_g5:"Transferência suportada", o_t1:"Entrega pelo suporte", o_t2:"Entrega pelo vendedor", crumb:"Início  >  Jogos  >  Ofertas  >  Aion 2 Internacional", hotline:"Linha 24/7", online:"Chat online 24/7", chat:"Conversar", qty:"{q} Kinah = {c}{p}",
+    qty_ph:"Quantidade", unit_w:"× 10.000 Kinah", hist_tip:"(últimos 10)", hist_none:"Ainda não há histórico",
     sel_h:"Monte seu pedido", f_type:"Tipo de produto", kinah:"Kinah", f_region:"Região", f_faction:"Facção", all:"Todos", f_world:"Servidor do jogo",
     search_ph:"Buscar", collapse:"Recolher", expand:"Expandir",
     world_note:"Ainda não há nomes de servidor para esta seleção. Escolha Todos e informe seu servidor do jogo ao falar conosco.",
@@ -370,6 +387,7 @@ var T = {
     found:"{n} Angebote gefunden", sort_default:"Standard", sort_ratio:"Bester Kurs", sort_new:"Neueste", lbl_type:"Typ", lbl_min:"Mindestbestellung", lbl_stock:"Bestand", per_unit:"pro 10.000 Kinah", rate:"1 {c} = {x} × 10.000 Kinah", buy:"Jetzt kaufen", empty:"Keine Angebote für deine Auswahl.",
     rate_l:"Abschlussrate", credit_l:"Bonität", srv_l:"Server", sell:"Verkaufen", perpage:"20 / Seite", goto:"Gehe zu", page_w:"Seite", next:"Weiter", last:"Letzte", pages:"{n} Seiten", unit10k:"10.000 Kinah = {c}{x}",
     g1_t:"Entschädigung bei Verzug", g1_d:"Geld geschützt, sicherer handeln", g2_t:"Sicherheit", g2_d:"Diebstahlschutz für sichere Trades", g3_t:"Profi-Team", g3_d:"Effiziente Begleitung bei jedem Trade", g4_t:"24/7-Support", g4_d:"Freundlicher Service das ganze Jahr", h1:"Erste Schritte", h1_0:"Treuhandhandel", h1_1:"Kommissionshandel", h1_2:"Support kontaktieren", h1_3:"Anmelden", h2:"Kaufen", h2_0:"Artikel suchen", h2_1:"Artikel kaufen", h2_2:"Preisnachlass anfragen", h2_3:"Shop-Artikel", h3:"Verkaufen", h3_0:"Artikel einstellen", h3_1:"An Käufer verkaufen", h3_2:"Artikel verwalten", h3_3:"Artikel bearbeiten", h4:"Kontosicherheit", h4_0:"Identitätsprüfung", h4_1:"Telefon verknüpfen", h4_2:"E-Mail ändern", h4_3:"Zahlungspasswort", h4_4:"Telefon ändern", h4_5:"Login-Passwort ändern", h5:"Bedingungen", h5_0:"Datenschutz", h5_1:"Nutzungsbedingungen", l1:"Über uns", l2:"Kontakt", l3:"Feedback", l4:"Karriere", l5:"Gewerbeschein", l6:"Haftungsausschluss", l7:"Partnerprogramm", l8:"Mitgliederclub", l9:"Hilfecenter", l10:"Nach oben", o_g1:"Dauerhafte Entschädigung", o_g2:"Sicherheitsgarantie", o_g3:"Kautionsentschädigung", o_g4:"Verifizierter Händler", o_g5:"Übertragung möglich", o_t1:"Lieferung durch Support", o_t2:"Lieferung durch Verkäufer", crumb:"Start  >  Spiele  >  Angebote  >  Aion 2 International", hotline:"24/7-Hotline", online:"Online-Chat rund um die Uhr", chat:"Chatten", qty:"{q} Kinah = {c}{p}",
+    qty_ph:"Menge", unit_w:"× 10.000 Kinah", hist_tip:"(letzte 10)", hist_none:"Noch kein Verlauf",
     sel_h:"Bestellung zusammenstellen", f_type:"Produkttyp", kinah:"Kinah", f_region:"Region", f_faction:"Fraktion", all:"Alle", f_world:"Spielserver",
     search_ph:"Suchen", collapse:"Einklappen", expand:"Ausklappen",
     world_note:"Für diese Auswahl sind noch keine Servernamen hinterlegt. Wähle Alle und nenne uns deinen Spielserver beim Kontakt.",
@@ -404,6 +422,7 @@ var T = {
     found:"{n} offres trouvées", sort_default:"Par défaut", sort_ratio:"Meilleur taux", sort_new:"Plus récentes", lbl_type:"Type", lbl_min:"Commande min.", lbl_stock:"Stock", per_unit:"pour 10 000 Kinah", rate:"1 {c} = {x} × 10 000 Kinah", buy:"Acheter", empty:"Aucune offre pour votre sélection.",
     rate_l:"Taux de réussite", credit_l:"Crédit", srv_l:"Serveur", sell:"Vendre", perpage:"20 / page", goto:"Aller à", page_w:"page", next:"Suivante", last:"Dernière", pages:"{n} pages", unit10k:"10 000 Kinah = {c}{x}",
     g1_t:"Compensation en cas de retard", g1_d:"Fonds protégés, achats plus sûrs", g2_t:"Sécurité", g2_d:"Mesures antivol pour des échanges sûrs", g3_t:"Équipe professionnelle", g3_d:"Un accompagnement efficace à chaque échange", g4_t:"Support 24h/24, 7j/7", g4_d:"Un service attentionné toute l'année", h1:"Premiers pas", h1_0:"Échange sécurisé", h1_1:"Vente en dépôt", h1_2:"Contacter le support", h1_3:"Se connecter", h2:"Acheter", h2_0:"Rechercher", h2_1:"Acheter un article", h2_2:"Demander une baisse de prix", h2_3:"Articles de la boutique", h3:"Vendre", h3_0:"Publier un article", h3_1:"Vendre aux acheteurs", h3_2:"Gérer mes articles", h3_3:"Modifier mes articles", h4:"Sécurité du compte", h4_0:"Vérification d'identité", h4_1:"Lier un téléphone", h4_2:"Changer d'e-mail", h4_3:"Mot de passe de paiement", h4_4:"Changer de téléphone", h4_5:"Changer le mot de passe", h5:"Conditions", h5_0:"Politique de confidentialité", h5_1:"Conditions d'utilisation", l1:"À propos", l2:"Nous contacter", l3:"Suggestions", l4:"Carrières", l5:"Licence commerciale", l6:"Mentions légales", l7:"Programme d'affiliation", l8:"Club membres", l9:"Centre d'aide", l10:"Haut de page", o_g1:"Compensation permanente", o_g2:"Garantie de sécurité", o_g3:"Compensation par caution", o_g4:"Marchand vérifié", o_g5:"Transfert accepté", o_t1:"Livraison par le support", o_t2:"Livraison par le vendeur", crumb:"Accueil  >  Jeux  >  Offres  >  Aion 2 International", hotline:"Ligne 24h/24", online:"Chat en ligne 24h/24", chat:"Discuter", qty:"{q} Kinah = {c}{p}",
+    qty_ph:"Quantité", unit_w:"× 10 000 Kinah", hist_tip:"(10 derniers)", hist_none:"Aucun historique",
     sel_h:"Composez votre commande", f_type:"Type de produit", kinah:"Kinah", f_region:"Région", f_faction:"Faction", all:"Tous", f_world:"Serveur de jeu",
     search_ph:"Rechercher", collapse:"Réduire", expand:"Développer",
     world_note:"Les noms de serveur pour cette sélection ne sont pas encore listés. Choisissez Tous et indiquez-nous votre serveur de jeu en nous contactant.",
@@ -438,6 +457,7 @@ var T = {
     found:"Найдено предложений: {n}", sort_default:"По умолчанию", sort_ratio:"Лучший курс", sort_new:"Новые", lbl_type:"Тип", lbl_min:"Мин. заказ", lbl_stock:"В наличии", per_unit:"за 10 000 Kinah", rate:"1 {c} = {x} × 10 000 Kinah", buy:"Купить", empty:"Нет предложений по вашему выбору.",
     rate_l:"Успешных сделок", credit_l:"Рейтинг", srv_l:"Сервер", sell:"Продать", perpage:"20 / стр.", goto:"Перейти на", page_w:"стр.", next:"Далее", last:"Последняя", pages:"Страниц: {n}", unit10k:"10 000 Kinah = {c}{x}",
     g1_t:"Компенсация за задержку", g1_d:"Средства защищены, сделки надёжнее", g2_t:"Безопасность", g2_d:"Защита от кражи для безопасных сделок", g3_t:"Команда профессионалов", g3_d:"Помогаем пройти каждую сделку", g4_t:"Поддержка 24/7", g4_d:"Внимательная поддержка круглый год", h1:"Начало работы", h1_0:"Гарантированная сделка", h1_1:"Комиссионная продажа", h1_2:"Связаться с поддержкой", h1_3:"Вход в аккаунт", h2:"Покупка", h2_0:"Поиск товаров", h2_1:"Покупка товаров", h2_2:"Запросить скидку", h2_3:"Товары магазина", h3:"Продажа", h3_0:"Разместить товар", h3_1:"Продать покупателю", h3_2:"Управление товарами", h3_3:"Редактировать товары", h4:"Безопасность аккаунта", h4_0:"Подтверждение личности", h4_1:"Привязать телефон", h4_2:"Сменить e-mail", h4_3:"Платёжный пароль", h4_4:"Сменить телефон", h4_5:"Сменить пароль", h5:"Условия", h5_0:"Политика конфиденциальности", h5_1:"Пользовательское соглашение", l1:"О нас", l2:"Контакты", l3:"Жалобы и предложения", l4:"Вакансии", l5:"Лицензия", l6:"Отказ от ответственности", l7:"Партнёрская программа", l8:"Клуб участников", l9:"Центр поддержки", l10:"Наверх", o_g1:"Пожизненная компенсация", o_g2:"Гарантия безопасности", o_g3:"Компенсация из депозита", o_g4:"Проверенный продавец", o_g5:"Возможна передача", o_t1:"Выдача через поддержку", o_t2:"Выдача продавцом", crumb:"Главная  >  Игры  >  Предложения  >  Aion 2 International", hotline:"Горячая линия 24/7", online:"Онлайн-чат 24/7", chat:"Написать в чат", qty:"{q} Kinah = {c}{p}",
+    qty_ph:"Количество", unit_w:"× 10 000 Kinah", hist_tip:"(последние 10)", hist_none:"История пуста",
     sel_h:"Соберите заказ", f_type:"Тип товара", kinah:"Kinah", f_region:"Регион", f_faction:"Фракция", all:"Все", f_world:"Игровой сервер",
     search_ph:"Поиск", collapse:"Свернуть", expand:"Развернуть",
     world_note:"Названия серверов для этого выбора пока не добавлены. Выберите «Все» и укажите игровой сервер при обращении к нам.",
@@ -468,9 +488,10 @@ var T = {
     lead:"我们承接欧服、亚服、北美西、北美东和南美的基纳订单。在下方选好游戏服，我们给你报价。",
     contact:"联系我们",
     game_title:"永恒之塔2国际服", game_sub:"网络游戏", reset:"重置所有选项",
-    pink:"粉钻", account:"游戏账号", gear:"装备", enh:"强化石", brk:"突破石", alt:"游戏小号", other:"其他", misc:"杂货", cdk:"CDK", topup:"游戏代充", merchant:"商家代练", price_h:"价格区间", ship_h:"发货笔数", multi:"多笔交易", single:"单笔交易", part_h:"是否支持部分", nopart:"不支持部分", part:"支持部分", more_h:"其他选项", guarantee:"服务保障", ttype:"交易类型", quick_h:"快捷搜索", ok:"确定", search_btn:"搜索", history:"历史筛选记录",
+    pink:"粉钻", account:"游戏账号", gear:"装备", enh:"强化石", brk:"突破石", alt:"游戏小号", other:"其他", misc:"杂货", cdk:"CDK", topup:"游戏代充", merchant:"商家代练", price_h:"价格区间", ship_h:"发货笔数", multi:"多笔交易", single:"单笔交易", part_h:"是否支持部分结算", nopart:"不支持部分", part:"支持部分", more_h:"其他选项", guarantee:"服务保障", ttype:"交易类型", quick_h:"快捷搜索", ok:"确定", search_btn:"搜索", history:"历史筛选记录",
     found:"为您找到 {n} 条记录", sort_default:"综合排序", sort_ratio:"比例最佳", sort_new:"最新发布", lbl_type:"类型", lbl_min:"起售", lbl_stock:"库存", per_unit:"每万基纳", rate:"1元={x}万基纳", buy:"立即购买", empty:"没有符合条件的商品。",
     rate_l:"成交率", credit_l:"信用", srv_l:"区服", sell:"我也要卖", perpage:"20条/页", goto:"前往", page_w:"页", next:"下一页", last:"尾页", pages:"共{n}页", unit10k:"1万基纳={x}元", g1_t:"无货超时赔付", g1_d:"资金保障，交易更放心", g2_t:"安全保障", g2_d:"防盗措施，保障交易安全", g3_t:"专业团队", g3_d:"高效专业引导完成交易", g4_t:"7×24小时客服", g4_d:"优质客服贴心服务，全年无休", h1:"新手入门", h1_0:"担保交易", h1_1:"寄售交易", h1_2:"联系接手客服", h1_3:"登录账户", h2:"购买项目", h2_0:"搜索商品", h2_1:"购买商品", h2_2:"购买求降价", h2_3:"购买商城商品", h3:"出售项目", h3_0:"发布商品", h3_1:"出货给收货商家", h3_2:"管理发布的商品", h3_3:"编辑发布的商品", h4:"账户安全", h4_0:"实名认证", h4_1:"绑定手机", h4_2:"换绑邮箱", h4_3:"设置支付密码", h4_4:"更换绑定手机", h4_5:"修改登录密码", h5:"协议条款", h5_0:"隐私政策", h5_1:"用户服务协议", l1:"关于我们", l2:"联系我们", l3:"投诉建议", l4:"诚聘英才", l5:"营业执照", l6:"免责声明", l7:"推广联盟", l8:"会员俱乐部", l9:"客服中心", l10:"返回顶部", o_g1:"赠永久包赔", o_g2:"安全保障", o_g3:"押金赔付", o_g4:"商家认证", o_g5:"支持过户", o_t1:"客服代发", o_t2:"卖家发货", guarantee:"服务保障", ttype:"交易类型", crumb:"您的位置：首页  >  游戏列表  >  商品列表  >  永恒之塔2国际服", hotline:"7×24小时客服热线", online:"24小时在线咨询", chat:"推荐在线咨询", qty:"{q}基纳 = {p}元",
+    qty_ph:"请输入数量", unit_w:"万基纳", hist_tip:"（展示近10条）", hist_none:"暂无历史筛选记录",
     sel_h:"选择订单", f_type:"商品类型", kinah:"基纳", f_region:"游戏服", f_faction:"种族", all:"全部", f_world:"游戏区",
     search_ph:"请输入关键字", collapse:"收起", expand:"展开",
     world_note:"该选项下的游戏区名称还未列出。请选「全部」，联系我们时告诉我们你的游戏区。",
@@ -500,7 +521,7 @@ var T = {
 var KEY = "lang";
 var cur = "en";
 var PER = 20;
-function fresh(){ return { region:"", faction:"all", world:"all", q:"", collapsed:false, price:-1, pmin:"", pmax:"", ship:"", part:"", sort:"default", kw:"", page:1 }; }
+function fresh(){ return { region:"", faction:"all", world:"all", q:"", collapsed:false, price:-1, pmin:"", pmax:"", ship:"", part:"", sort:"ratio", kw:"", page:1 }; }
 var state = fresh();
 var RANGES = [[0,200],[200,500],[500,1000],[1000,2000],[2000,Infinity]];
 
@@ -530,7 +551,31 @@ function wlabel(w){
   return cur === "zh" ? w[0] + "（" + (w[2] === "elyos" ? "天" : "魔") + w[1] + "）" : w[0] + " (" + (w[2] === "elyos" ? "E" : "A") + w[1] + ")";
 }
 
+var HKEY = "kinah_filter_history";
+function hload(){ try { return JSON.parse(localStorage.getItem(HKEY)) || []; } catch (e) { return []; } }
+function hsave(){
+  if (!state.region) return;
+  var it = { region: state.region, faction: state.faction, world: state.world };
+  var h = hload().filter(function (x) { return !(x.region === it.region && x.faction === it.faction && x.world === it.world); });
+  h.unshift(it);
+  try { localStorage.setItem(HKEY, JSON.stringify(h.slice(0, 10))); } catch (e) {}
+}
+function hrender(){
+  var box = $("histlist"); box.textContent = "";
+  var h = hload();
+  if (!h.length) { box.appendChild(el("div", "hint", t("hist_none"))); return; }
+  h.forEach(function (x) {
+    var label = t(x.region) + (x.faction !== "all" ? " / " + t(x.faction) : "") + (x.world !== "all" ? " / " + x.world : "");
+    box.appendChild(chip(label, false, function (e) {
+      e.stopPropagation();
+      state.region = x.region; state.faction = x.faction; state.world = x.world; state.page = 1;
+      $("histw").classList.remove("open"); render();
+    }));
+  });
+}
+
 function render(){
+  hsave();
   var r = $("regions"), f = $("factions"), w = $("worlds");
   r.textContent = ""; f.textContent = ""; w.textContent = "";
   function pick(){ state.world = "all"; state.q = ""; state.page = 1; $("search").value = ""; render(); }
@@ -552,7 +597,7 @@ function render(){
 }
 
 function nz(x){ return x === null || x === undefined; }
-function fmtK(n){ return nz(n) ? "—" : (cur === "zh" ? (n / 10000).toLocaleString("en-US") + "万" : n.toLocaleString("en-US")); }
+function fmtK(n){ return nz(n) ? "—" : (cur === "zh" ? String(n / 10000) + "万" : n.toLocaleString("en-US")); }
 function fmtKU(n){ return nz(n) ? "—" : fmtK(n) + (cur === "zh" ? "基纳" : " Kinah"); }
 function fmtP(x, d){ return nz(x) || !isFinite(x) ? "—" : String(parseFloat(x.toFixed(d))); }
 function total(o){ return nz(o.perWan) || nz(o.min) ? NaN : o.perWan * (o.min / 10000); }
@@ -588,24 +633,38 @@ function renderOffers(){
   if (!list.length) box.appendChild(el("p", "hint", t("empty")));
   list.slice((state.page - 1) * PER, state.page * PER).forEach(function (o) {
     var c = el("div", "offer");
-    var c1 = el("div");
-    kv(c1, "rate_l", nz(o.rate) ? "—" : o.rate + "%");
-    kv(c1, "credit_l", nz(o.credit) ? "—" : String(o.credit));
-    var tags = el("div", "tags"); tags.style.marginTop = "6px";
+    var c1 = el("div", "seller");
+    c1.appendChild(el("div", "ava"));
+    var si = el("div");
+    kv(si, "rate_l", nz(o.rate) ? "—" : o.rate + "%");
+    var cr = kv(si, "credit_l", nz(o.credit) ? "—" : "");
+    if (!nz(o.credit)) cr.appendChild(el("span", "hearts", new Array(Math.max(0, o.credit | 0) + 1).join("♥")));
+    c1.appendChild(si);
+    var c2 = el("div");
+    var tags = el("div", "tags");
     tags.appendChild(el("span", "", t(o.multi ? "multi" : "single")));
     tags.appendChild(el("span", "", t(o.partial ? "part" : "nopart")));
-    c1.appendChild(tags);
-    var c2 = el("div");
+    c2.appendChild(tags);
     kv(c2, "srv_l", t(o.region) + " / " + t(o.faction) + " / " + wlabel([o.world, o.wnum, o.faction]));
     kv(c2, "lbl_type", t("kinah"));
     var c3 = el("div");
-    var tot = total(o);
-    c3.appendChild(el("div", "pv", t("qty").replace("{q}", fmtK(o.min)).replace("{c}", CURRENCY).replace("{p}", isNaN(tot) ? "—" : tot.toFixed(2))));
-    var mm = el("div"); mm.style.fontSize = "14px";
+    var row = el("div", "qrow");
+    var qi = el("input", "qty"); qi.type = "number"; qi.placeholder = t("qty_ph");
+    if (nz(o.min)) qi.disabled = true;
+    else { qi.value = o.min / 10000; qi.min = o.min / 10000; if (!nz(o.stock)) qi.max = o.stock / 10000; }
+    var pv = el("span", "pv");
+    function upd(){
+      var n = parseFloat(qi.value), pr = (nz(o.perWan) || isNaN(n)) ? "—" : (n * o.perWan).toFixed(2);
+      pv.textContent = cur === "zh" ? "=" + pr + "元" : "= " + CURRENCY + pr;
+    }
+    qi.addEventListener("input", upd); upd();
+    row.appendChild(qi); row.appendChild(el("span", "k", t("unit_w"))); row.appendChild(pv);
+    c3.appendChild(row);
+    var mm = el("div", "mm");
     kv(mm, "lbl_min", fmtKU(o.min)); kv(mm, "lbl_stock", fmtKU(o.stock));
     c3.appendChild(mm);
-    var c4 = el("div"); c4.style.fontSize = "14px";
-    c4.appendChild(el("div", "v", t("rate").replace("{c}", CURRENCY).replace("{x}", fmtP(nz(o.perWan) ? null : 1 / o.perWan, 4))));
+    var c4 = el("div"); c4.style.fontSize = "13px";
+    c4.appendChild(el("div", "rv", t("rate").replace("{c}", CURRENCY).replace("{x}", fmtP(nz(o.perWan) ? null : 1 / o.perWan, 4))));
     c4.appendChild(el("div", "k", t("unit10k").replace("{c}", CURRENCY).replace("{x}", fmtP(o.perWan, 4))));
     var c5 = el("div");
     var a = el("a", "btn buy", t("buy")); a.href = link; a.target = "_blank"; a.rel = "noopener";
@@ -682,7 +741,7 @@ function renderStatic(){
 
   var q = $("quickr"); q.textContent = "";
   var w = el("div", "qs");
-  var qi = el("input", "qsin"); qi.type = "text"; qi.placeholder = t("search_ph"); qi.value = state.kw;
+  var qi = el("input", "qsin search"); qi.type = "text"; qi.placeholder = t("search_ph"); qi.value = state.kw;
   var qb = el("button", "", t("search_btn")); qb.type = "button";
   function find(){ state.kw = qi.value; state.page = 1; renderOffers(); }
   qb.addEventListener("click", find);
@@ -726,6 +785,13 @@ $("lang").addEventListener("change", function () {
 });
 $("search").addEventListener("input", function () { state.q = this.value; render(); });
 $("toggle").addEventListener("click", function () { state.collapsed = !state.collapsed; render(); });
+$("histbtn").addEventListener("click", function (e) {
+  e.stopPropagation();
+  var w = $("histw"), open = w.classList.contains("open");
+  document.querySelectorAll(".ddw.open").forEach(function (x) { x.classList.remove("open"); });
+  if (!open) { hrender(); w.classList.add("open"); }
+});
+$("histw").addEventListener("click", function (e) { e.stopPropagation(); });
 $("reset").addEventListener("click", function () { state = fresh(); $("search").value = ""; render(); renderStatic(); });
 
 apply(detect());
