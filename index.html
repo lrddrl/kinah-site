@@ -500,7 +500,7 @@ var T = {
 var KEY = "lang";
 var cur = "en";
 var PER = 20;
-function fresh(){ return { region:"eu", faction:"all", world:"all", q:"", collapsed:false, price:-1, pmin:"", pmax:"", ship:"", part:"", sort:"default", kw:"", page:1 }; }
+function fresh(){ return { region:"", faction:"all", world:"all", q:"", collapsed:false, price:-1, pmin:"", pmax:"", ship:"", part:"", sort:"default", kw:"", page:1 }; }
 var state = fresh();
 var RANGES = [[0,200],[200,500],[500,1000],[1000,2000],[2000,Infinity]];
 
@@ -535,14 +535,15 @@ function render(){
   r.textContent = ""; f.textContent = ""; w.textContent = "";
   function pick(){ state.world = "all"; state.q = ""; state.page = 1; $("search").value = ""; render(); }
   REGIONS.forEach(function (k) { r.appendChild(chip(t(k), state.region === k, function () { state.region = k; pick(); })); });
-  FACTIONS.forEach(function (k) { f.appendChild(chip(k === "all" ? t("all") : t(k), state.faction === k, function () { state.faction = k; pick(); })); });
-  w.appendChild(chip(t("all"), state.world === "all", function () { state.world = "all"; state.page = 1; render(); }));
+  var none = !state.region;   // nothing chosen yet: like the platform, only product type is selected
+  (none ? ["all"] : FACTIONS).forEach(function (k) { f.appendChild(chip(k === "all" ? t("all") : t(k), !none && state.faction === k, function () { state.faction = k; pick(); })); });
+  w.appendChild(chip(t("all"), !none && state.world === "all", function () { state.world = "all"; state.page = 1; render(); }));
   var list = worldsFor(state.region, state.faction), q = state.q.trim().toLowerCase();
   if (list) list.forEach(function (x) {
     if (q && wlabel(x).toLowerCase().indexOf(q) === -1) return;
     w.appendChild(chip(wlabel(x), state.world === x[0], function () { state.world = x[0]; state.page = 1; render(); }));
   });
-  $("worldnote").hidden = !!list;
+  $("worldnote").hidden = !!list || none;
   $("worldbox").hidden = state.collapsed;
   $("toggle").textContent = state.collapsed ? t("expand") : t("collapse");
   $("toggle").className = "toggle" + (state.collapsed ? " closed" : "");
@@ -557,7 +558,7 @@ function total(o){ return nz(o.perWan) || nz(o.min) ? NaN : o.perWan * (o.min / 
 function filtered(){
   var kw = state.kw.trim().toLowerCase();
   var list = OFFERS.filter(function (o) {
-    if (o.region !== state.region) return false;
+    if (state.region && o.region !== state.region) return false;
     if (state.faction !== "all" && o.faction !== state.faction) return false;
     if (state.world !== "all" && o.world !== state.world) return false;
     if (state.ship === "multi" && !o.multi) return false;
