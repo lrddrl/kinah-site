@@ -496,7 +496,7 @@ var T = {
 
 var KEY = "lang";
 var cur = "en";
-var state = { region: "eu", faction: "all", world: "all", q: "", collapsed: false };
+var state = { region: "eu", faction: "elyos", world: "all", q: "", collapsed: false };
 
 function supported(c){ return T.hasOwnProperty(c); }
 function detect(){
@@ -637,7 +637,7 @@ $("toggle").addEventListener("click", function () { state.collapsed = !state.col
 $("char").addEventListener("input", summary);
 $("amount").addEventListener("input", summary);
 $("reset").addEventListener("click", function () {
-  state = { region: "eu", faction: "all", world: "all", q: "", collapsed: false };
+  state = { region: "eu", faction: "elyos", world: "all", q: "", collapsed: false };
   $("search").value = ""; $("char").value = ""; $("amount").value = ""; render(); renderStatic();
 });
 $("copy").addEventListener("click", function () {
