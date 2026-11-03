@@ -16,7 +16,7 @@ body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-a
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:14px;padding-bottom:14px}
 .brand{font-weight:700;letter-spacing:.02em}
 select{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit;font-size:14px}
-.hero{padding:56px 0 40px}
+.hero{padding:56px 16px 40px}
 h1{font-size:clamp(26px,5.5vw,40px);line-height:1.2;margin:0 0 14px}
 .lead{color:var(--muted);margin:0 0 24px;max-width:600px}
 .btn{display:inline-block;background:var(--accent);color:#1a1405;font-weight:700;text-decoration:none;
@@ -43,7 +43,11 @@ details p{margin:0 0 14px;color:var(--muted)}
 .contact{text-align:center;padding:48px 0 56px}
 .contact p{color:var(--muted);margin:0 0 20px}
 footer{border-top:1px solid var(--line);padding:20px 0 32px;color:var(--muted);font-size:13px;text-align:center}
-@media (max-width:480px){.btn{display:block;text-align:center}}
+@media (max-width:480px){
+  .btn{display:block;text-align:center}
+  table{min-width:0}
+  th,td{padding:12px 10px;font-size:15px}
+}
 </style>
 </head>
 <body>
