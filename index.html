@@ -10,9 +10,12 @@
   --bg:#0e1015; --card:#171a22; --line:#2a2f3c; --text:#e9ebf1; --muted:#9aa1b2; --accent:#e0b44c;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans","PingFang SC","Microsoft YaHei",sans-serif}
 .wrap{max-width:820px;margin:0 auto;padding:0 16px}
-.top{padding:18px 0;border-bottom:1px solid var(--line);font-weight:700;letter-spacing:.02em}
+.top{border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:14px;padding-bottom:14px}
+.brand{font-weight:700;letter-spacing:.02em}
+select{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit;font-size:14px}
 .hero{padding:56px 0 40px}
 h1{font-size:clamp(26px,5.5vw,40px);line-height:1.2;margin:0 0 14px}
 .lead{color:var(--muted);margin:0 0 24px;max-width:600px}
@@ -45,89 +48,301 @@ footer{border-top:1px solid var(--line);padding:20px 0 32px;color:var(--muted);f
 </head>
 <body>
 
-<div class="wrap top"><span data-site-name>[Site Name]</span></div>
+<div class="top">
+  <div class="wrap">
+    <span class="brand" data-site-name>[Site Name]</span>
+    <select id="lang" aria-label="Language">
+      <option value="en">English</option>
+      <option value="es">Español</option>
+      <option value="pt">Português</option>
+      <option value="de">Deutsch</option>
+      <option value="fr">Français</option>
+      <option value="ru">Русский</option>
+      <option value="zh">中文</option>
+    </select>
+  </div>
+</div>
 
 <header class="hero wrap">
-  <h1>Aion 2 Kinah orders for the international server.</h1>
-  <p class="lead">We take Kinah orders for North America East, North America West, Europe and South America. Message us with what you need and we will send you a quote.</p>
-  <a class="btn" data-contact href="#" target="_blank" rel="noopener">Contact us</a>
+  <h1 data-i18n="h1">Aion 2 Kinah orders for the international server.</h1>
+  <p class="lead" data-i18n="lead">We take Kinah orders for North America East, North America West, Europe and South America. Message us with what you need and we will send you a quote.</p>
+  <a class="btn" data-contact data-i18n="contact" href="#" target="_blank" rel="noopener">Contact us</a>
 </header>
 
 <main class="wrap">
 
   <section id="prices">
-    <h2>Servers and prices</h2>
+    <h2 data-i18n="prices_h">Servers and prices</h2>
     <div class="tablebox">
       <table>
-        <thead><tr><th>Server</th><th>Faction</th><th>Price</th></tr></thead>
+        <thead><tr><th data-i18n="th_server">Server</th><th data-i18n="th_faction">Faction</th><th data-i18n="th_price">Price</th></tr></thead>
         <tbody>
-          <tr><td>North America East</td><td>Elyos</td><td class="price">Contact for quote</td></tr>
-          <tr><td>North America East</td><td>Asmodian</td><td class="price">Contact for quote</td></tr>
-          <tr><td>North America West</td><td>Elyos</td><td class="price">Contact for quote</td></tr>
-          <tr><td>North America West</td><td>Asmodian</td><td class="price">Contact for quote</td></tr>
-          <tr><td>Europe</td><td>Both</td><td class="price">Contact for quote</td></tr>
-          <tr><td>South America</td><td>Both</td><td class="price">Contact for quote</td></tr>
+          <tr><td data-i18n="na_east">North America East</td><td data-i18n="elyos">Elyos</td><td class="price" data-i18n="quote">Contact for quote</td></tr>
+          <tr><td data-i18n="na_east">North America East</td><td data-i18n="asmo">Asmodian</td><td class="price" data-i18n="quote">Contact for quote</td></tr>
+          <tr><td data-i18n="na_west">North America West</td><td data-i18n="elyos">Elyos</td><td class="price" data-i18n="quote">Contact for quote</td></tr>
+          <tr><td data-i18n="na_west">North America West</td><td data-i18n="asmo">Asmodian</td><td class="price" data-i18n="quote">Contact for quote</td></tr>
+          <tr><td data-i18n="eu">Europe</td><td data-i18n="both">Both</td><td class="price" data-i18n="quote">Contact for quote</td></tr>
+          <tr><td data-i18n="sa">South America</td><td data-i18n="both">Both</td><td class="price" data-i18n="quote">Contact for quote</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="note">Prices depend on the amount and the market, so we quote each order directly.</p>
+    <p class="note" data-i18n="price_note">Prices depend on the amount and the market, so we quote each order directly.</p>
   </section>
 
   <section id="how">
-    <h2>How an order works</h2>
+    <h2 data-i18n="how_h">How an order works</h2>
     <ol class="steps">
-      <li><b>Contact us</b><span>Send us a message using the button on this page.</span></li>
-      <li><b>Tell us your order</b><span>Server, faction and how much Kinah you want.</span></li>
-      <li><b>Confirm the price</b><span>We reply with a quote. Go ahead only if you agree with it.</span></li>
-      <li><b>Trade</b><span>We arrange the payment and the in-game trade with you in chat.</span></li>
+      <li><b data-i18n="s1_t">Contact us and tell us your order</b><span data-i18n="s1_d">Send your server, faction and how much Kinah you want.</span></li>
+      <li><b data-i18n="s2_t">Confirm the price</b><span data-i18n="s2_d">We reply with a quote. Go ahead only if you agree with it.</span></li>
+      <li><b data-i18n="s3_t">List an item, we buy it</b><span data-i18n="s3_d">You list a material on the in-game auction house at the agreed price. We buy it and send you a screenshot of the purchase.</span></li>
+      <li><b data-i18n="s4_t">Check and confirm</b><span data-i18n="s4_d">Check that the Kinah arrived, then confirm receipt.</span></li>
     </ol>
   </section>
 
   <section id="faq">
-    <h2>FAQ</h2>
+    <h2 data-i18n="faq_h">FAQ</h2>
     <details>
-      <summary>What do I need to send to get a quote?</summary>
-      <p>Your server (NA East, NA West, Europe or South America), your faction if it applies, and the amount of Kinah you want.</p>
+      <summary data-i18n="q1">What do I need to send to get a quote?</summary>
+      <p data-i18n="a1">Your server (NA East, NA West, Europe or South America), your faction if it applies, and the amount of Kinah you want.</p>
     </details>
     <details>
-      <summary>How is the price decided?</summary>
-      <p>It depends on the server and the amount. Send us your order and we will give you a quote before anything is agreed.</p>
+      <summary data-i18n="q2">How is the price decided?</summary>
+      <p data-i18n="a2">It depends on the server and the amount. Send us your order and we will give you a quote before anything is agreed.</p>
     </details>
     <details>
-      <summary>Do you need my account password?</summary>
-      <p>No. We will never ask for your password.</p>
+      <summary data-i18n="q3">How does delivery work?</summary>
+      <p data-i18n="a3">You list a material on the in-game auction house at the agreed price. We buy it and send you a screenshot of the purchase, then you check your Kinah and confirm.</p>
     </details>
     <details>
-      <summary>How do I pay?</summary>
-      <p>We confirm the payment method with you in chat once the price is agreed.</p>
+      <summary data-i18n="q4">Do you need my account password?</summary>
+      <p data-i18n="a4">No. We will never ask for your password.</p>
     </details>
     <details>
-      <summary>Which servers do you cover?</summary>
-      <p>North America East and West (Elyos and Asmodian), Europe, and South America. Ask us if you need something not listed.</p>
+      <summary data-i18n="q5">How do I pay?</summary>
+      <p data-i18n="a5">We confirm the payment method with you once the price is agreed.</p>
+    </details>
+    <details>
+      <summary data-i18n="q6">Which servers do you cover?</summary>
+      <p data-i18n="a6">North America East and West (Elyos and Asmodian), Europe, and South America. Ask us if you need something not listed.</p>
     </details>
   </section>
 
   <section class="contact" id="contact">
-    <h2>Ready to place an order?</h2>
-    <p>Message us and tell us your server and amount.</p>
-    <a class="btn" data-contact href="#" target="_blank" rel="noopener">Contact us</a>
+    <h2 data-i18n="cta_h">Ready to place an order?</h2>
+    <p data-i18n="cta_p">Message us and tell us your server and amount.</p>
+    <a class="btn" data-contact data-i18n="contact" href="#" target="_blank" rel="noopener">Contact us</a>
   </section>
 
 </main>
 
 <footer>
-  <div class="wrap"><span data-site-name>[Site Name]</span> is not affiliated with NCSOFT. Aion is a trademark of its owner.</div>
+  <div class="wrap"><span data-site-name>[Site Name]</span> <span data-i18n="disclaimer">is not affiliated with NCSOFT. Aion is a trademark of its owner.</span></div>
 </footer>
 
 <script>
 /* ===== EDIT HERE: the only place you need to change the link and the name ===== */
-var CONTACT_LINK = "[YOUR_LINK]";   // your Discord invite or WhatsApp link
+var CONTACT_LINK = "[YOUR_LINK]";   // where the Contact buttons go
 var SITE_NAME    = "[Site Name]";
 /* ============================================================================== */
 
-document.querySelectorAll("[data-contact]").forEach(function (a) { a.href = CONTACT_LINK; });
-document.querySelectorAll("[data-site-name]").forEach(function (el) { el.textContent = SITE_NAME; });
-document.title = SITE_NAME + " – Aion 2 Kinah Orders";
+var T = {
+  en: {
+    title:"Aion 2 Kinah Orders", meta:"Aion 2 international server Kinah orders. Contact us for a quote.",
+    h1:"Aion 2 Kinah orders for the international server.",
+    lead:"We take Kinah orders for North America East, North America West, Europe and South America. Message us with what you need and we will send you a quote.",
+    contact:"Contact us", prices_h:"Servers and prices", th_server:"Server", th_faction:"Faction", th_price:"Price",
+    na_east:"North America East", na_west:"North America West", eu:"Europe", sa:"South America",
+    elyos:"Elyos", asmo:"Asmodian", both:"Both", quote:"Contact for quote",
+    price_note:"Prices depend on the amount and the market, so we quote each order directly.",
+    how_h:"How an order works",
+    s1_t:"Contact us and tell us your order", s1_d:"Send your server, faction and how much Kinah you want.",
+    s2_t:"Confirm the price", s2_d:"We reply with a quote. Go ahead only if you agree with it.",
+    s3_t:"List an item, we buy it", s3_d:"You list a material on the in-game auction house at the agreed price. We buy it and send you a screenshot of the purchase.",
+    s4_t:"Check and confirm", s4_d:"Check that the Kinah arrived, then confirm receipt.",
+    faq_h:"FAQ",
+    q1:"What do I need to send to get a quote?", a1:"Your server (NA East, NA West, Europe or South America), your faction if it applies, and the amount of Kinah you want.",
+    q2:"How is the price decided?", a2:"It depends on the server and the amount. Send us your order and we will give you a quote before anything is agreed.",
+    q3:"How does delivery work?", a3:"You list a material on the in-game auction house at the agreed price. We buy it and send you a screenshot of the purchase, then you check your Kinah and confirm.",
+    q4:"Do you need my account password?", a4:"No. We will never ask for your password.",
+    q5:"How do I pay?", a5:"We confirm the payment method with you once the price is agreed.",
+    q6:"Which servers do you cover?", a6:"North America East and West (Elyos and Asmodian), Europe, and South America. Ask us if you need something not listed.",
+    cta_h:"Ready to place an order?", cta_p:"Message us and tell us your server and amount.",
+    disclaimer:"is not affiliated with NCSOFT. Aion is a trademark of its owner."
+  },
+  es: {
+    title:"Pedidos de Kinah de Aion 2", meta:"Pedidos de Kinah para el servidor internacional de Aion 2. Contáctanos para un presupuesto.",
+    h1:"Pedidos de Kinah de Aion 2 para el servidor internacional.",
+    lead:"Aceptamos pedidos de Kinah para Norteamérica Este, Norteamérica Oeste, Europa y Sudamérica. Escríbenos lo que necesitas y te enviaremos un presupuesto.",
+    contact:"Contáctanos", prices_h:"Servidores y precios", th_server:"Servidor", th_faction:"Facción", th_price:"Precio",
+    na_east:"Norteamérica Este", na_west:"Norteamérica Oeste", eu:"Europa", sa:"Sudamérica",
+    elyos:"Elyos", asmo:"Asmodian", both:"Ambas", quote:"Consulta el precio",
+    price_note:"Los precios dependen de la cantidad y del mercado, por eso cotizamos cada pedido directamente.",
+    how_h:"Cómo funciona un pedido",
+    s1_t:"Contáctanos y cuéntanos tu pedido", s1_d:"Envíanos tu servidor, tu facción y cuánto Kinah quieres.",
+    s2_t:"Confirma el precio", s2_d:"Te respondemos con un presupuesto. Sigue adelante solo si estás de acuerdo.",
+    s3_t:"Publica un objeto y nosotros lo compramos", s3_d:"Publicas un material en la casa de subastas del juego al precio acordado. Nosotros lo compramos y te enviamos una captura de la compra.",
+    s4_t:"Comprueba y confirma", s4_d:"Comprueba que el Kinah haya llegado y confirma la recepción.",
+    faq_h:"Preguntas frecuentes",
+    q1:"¿Qué debo enviar para recibir un presupuesto?", a1:"Tu servidor (NA Este, NA Oeste, Europa o Sudamérica), tu facción si corresponde, y la cantidad de Kinah que quieres.",
+    q2:"¿Cómo se decide el precio?", a2:"Depende del servidor y de la cantidad. Envíanos tu pedido y te daremos un presupuesto antes de acordar nada.",
+    q3:"¿Cómo funciona la entrega?", a3:"Publicas un material en la casa de subastas del juego al precio acordado. Nosotros lo compramos y te enviamos una captura de la compra; después compruebas tu Kinah y confirmas.",
+    q4:"¿Necesitan la contraseña de mi cuenta?", a4:"No. Nunca te pediremos tu contraseña.",
+    q5:"¿Cómo pago?", a5:"Confirmamos contigo el método de pago una vez acordado el precio.",
+    q6:"¿Qué servidores cubren?", a6:"Norteamérica Este y Oeste (Elyos y Asmodian), Europa y Sudamérica. Pregúntanos si necesitas otro.",
+    cta_h:"¿Listo para hacer un pedido?", cta_p:"Escríbenos e indícanos tu servidor y la cantidad.",
+    disclaimer:"no está afiliado con NCSOFT. Aion es una marca registrada de su propietario."
+  },
+  pt: {
+    title:"Pedidos de Kinah de Aion 2", meta:"Pedidos de Kinah para o servidor internacional de Aion 2. Fale conosco para um orçamento.",
+    h1:"Pedidos de Kinah de Aion 2 para o servidor internacional.",
+    lead:"Aceitamos pedidos de Kinah para América do Norte Leste, América do Norte Oeste, Europa e América do Sul. Envie o que você precisa e enviaremos um orçamento.",
+    contact:"Fale conosco", prices_h:"Servidores e preços", th_server:"Servidor", th_faction:"Facção", th_price:"Preço",
+    na_east:"América do Norte Leste", na_west:"América do Norte Oeste", eu:"Europa", sa:"América do Sul",
+    elyos:"Elyos", asmo:"Asmodian", both:"Ambas", quote:"Consulte o preço",
+    price_note:"Os preços dependem da quantidade e do mercado, por isso cotamos cada pedido diretamente.",
+    how_h:"Como funciona um pedido",
+    s1_t:"Fale conosco e conte seu pedido", s1_d:"Envie seu servidor, sua facção e quanto Kinah você quer.",
+    s2_t:"Confirme o preço", s2_d:"Respondemos com um orçamento. Só prossiga se concordar.",
+    s3_t:"Anuncie um item e nós compramos", s3_d:"Você anuncia um material na casa de leilões do jogo pelo preço combinado. Nós compramos e enviamos uma captura de tela da compra.",
+    s4_t:"Verifique e confirme", s4_d:"Verifique se o Kinah chegou e confirme o recebimento.",
+    faq_h:"Perguntas frequentes",
+    q1:"O que preciso enviar para receber um orçamento?", a1:"Seu servidor (NA Leste, NA Oeste, Europa ou América do Sul), sua facção se for o caso, e a quantidade de Kinah que você quer.",
+    q2:"Como o preço é definido?", a2:"Depende do servidor e da quantidade. Envie seu pedido e daremos um orçamento antes de combinar qualquer coisa.",
+    q3:"Como funciona a entrega?", a3:"Você anuncia um material na casa de leilões do jogo pelo preço combinado. Nós compramos e enviamos uma captura de tela da compra; depois você verifica seu Kinah e confirma.",
+    q4:"Vocês precisam da senha da minha conta?", a4:"Não. Nunca pediremos sua senha.",
+    q5:"Como eu pago?", a5:"Confirmamos a forma de pagamento com você depois de combinado o preço.",
+    q6:"Quais servidores vocês atendem?", a6:"América do Norte Leste e Oeste (Elyos e Asmodian), Europa e América do Sul. Pergunte se precisar de outro.",
+    cta_h:"Pronto para fazer um pedido?", cta_p:"Envie uma mensagem com seu servidor e a quantidade.",
+    disclaimer:"não é afiliado à NCSOFT. Aion é marca registrada de seu proprietário."
+  },
+  de: {
+    title:"Aion 2 Kinah-Bestellungen", meta:"Kinah-Bestellungen für den internationalen Aion-2-Server. Kontaktiere uns für ein Angebot.",
+    h1:"Aion-2-Kinah-Bestellungen für den internationalen Server.",
+    lead:"Wir nehmen Kinah-Bestellungen für Nordamerika Ost, Nordamerika West, Europa und Südamerika an. Schreib uns, was du brauchst, und wir senden dir ein Angebot.",
+    contact:"Kontakt aufnehmen", prices_h:"Server und Preise", th_server:"Server", th_faction:"Fraktion", th_price:"Preis",
+    na_east:"Nordamerika Ost", na_west:"Nordamerika West", eu:"Europa", sa:"Südamerika",
+    elyos:"Elyos", asmo:"Asmodian", both:"Beide", quote:"Preis auf Anfrage",
+    price_note:"Die Preise hängen von Menge und Markt ab, deshalb erstellen wir jedes Angebot direkt.",
+    how_h:"So läuft eine Bestellung ab",
+    s1_t:"Kontaktiere uns und nenne deine Bestellung", s1_d:"Sende uns Server, Fraktion und die gewünschte Menge Kinah.",
+    s2_t:"Preis bestätigen", s2_d:"Wir antworten mit einem Angebot. Gehe nur weiter, wenn du einverstanden bist.",
+    s3_t:"Du stellst ein, wir kaufen", s3_d:"Du stellst ein Material zum vereinbarten Preis im Auktionshaus des Spiels ein. Wir kaufen es und senden dir einen Screenshot des Kaufs.",
+    s4_t:"Prüfen und bestätigen", s4_d:"Prüfe, ob das Kinah angekommen ist, und bestätige den Erhalt.",
+    faq_h:"Häufige Fragen",
+    q1:"Was muss ich für ein Angebot senden?", a1:"Deinen Server (NA Ost, NA West, Europa oder Südamerika), gegebenenfalls deine Fraktion und die gewünschte Menge Kinah.",
+    q2:"Wie wird der Preis bestimmt?", a2:"Er hängt vom Server und der Menge ab. Sende uns deine Bestellung, wir nennen dir ein Angebot, bevor etwas vereinbart wird.",
+    q3:"Wie funktioniert die Lieferung?", a3:"Du stellst ein Material zum vereinbarten Preis im Auktionshaus des Spiels ein. Wir kaufen es und senden dir einen Screenshot des Kaufs. Danach prüfst du dein Kinah und bestätigst.",
+    q4:"Braucht ihr mein Account-Passwort?", a4:"Nein. Wir fragen niemals nach deinem Passwort.",
+    q5:"Wie bezahle ich?", a5:"Wir klären die Zahlungsart mit dir, sobald der Preis vereinbart ist.",
+    q6:"Welche Server deckt ihr ab?", a6:"Nordamerika Ost und West (Elyos und Asmodian), Europa und Südamerika. Frag uns, wenn du etwas anderes brauchst.",
+    cta_h:"Bereit für deine Bestellung?", cta_p:"Schreib uns deinen Server und die Menge.",
+    disclaimer:"ist nicht mit NCSOFT verbunden. Aion ist eine Marke ihres Eigentümers."
+  },
+  fr: {
+    title:"Commandes de Kinah Aion 2", meta:"Commandes de Kinah pour le serveur international d'Aion 2. Contactez-nous pour un devis.",
+    h1:"Commandes de Kinah Aion 2 pour le serveur international.",
+    lead:"Nous prenons des commandes de Kinah pour l'Amérique du Nord Est, l'Amérique du Nord Ouest, l'Europe et l'Amérique du Sud. Écrivez-nous ce dont vous avez besoin et nous vous enverrons un devis.",
+    contact:"Nous contacter", prices_h:"Serveurs et prix", th_server:"Serveur", th_faction:"Faction", th_price:"Prix",
+    na_east:"Amérique du Nord Est", na_west:"Amérique du Nord Ouest", eu:"Europe", sa:"Amérique du Sud",
+    elyos:"Elyos", asmo:"Asmodian", both:"Les deux", quote:"Prix sur demande",
+    price_note:"Les prix dépendent de la quantité et du marché ; nous établissons donc chaque devis directement.",
+    how_h:"Comment se déroule une commande",
+    s1_t:"Contactez-nous et indiquez votre commande", s1_d:"Envoyez votre serveur, votre faction et la quantité de Kinah souhaitée.",
+    s2_t:"Confirmez le prix", s2_d:"Nous répondons avec un devis. Ne poursuivez que si vous êtes d'accord.",
+    s3_t:"Vous mettez en vente, nous achetons", s3_d:"Vous mettez un matériau en vente à l'hôtel des ventes du jeu au prix convenu. Nous l'achetons et vous envoyons une capture d'écran de l'achat.",
+    s4_t:"Vérifiez et confirmez", s4_d:"Vérifiez que les Kinah sont arrivés, puis confirmez la réception.",
+    faq_h:"FAQ",
+    q1:"Que dois-je envoyer pour obtenir un devis ?", a1:"Votre serveur (NA Est, NA Ouest, Europe ou Amérique du Sud), votre faction le cas échéant, et la quantité de Kinah souhaitée.",
+    q2:"Comment le prix est-il fixé ?", a2:"Il dépend du serveur et de la quantité. Envoyez-nous votre commande et nous vous donnerons un devis avant tout accord.",
+    q3:"Comment se passe la livraison ?", a3:"Vous mettez un matériau en vente à l'hôtel des ventes du jeu au prix convenu. Nous l'achetons et vous envoyons une capture d'écran de l'achat, puis vous vérifiez vos Kinah et confirmez.",
+    q4:"Avez-vous besoin du mot de passe de mon compte ?", a4:"Non. Nous ne vous demanderons jamais votre mot de passe.",
+    q5:"Comment payer ?", a5:"Nous confirmons le mode de paiement avec vous une fois le prix convenu.",
+    q6:"Quels serveurs couvrez-vous ?", a6:"Amérique du Nord Est et Ouest (Elyos et Asmodian), Europe et Amérique du Sud. Demandez-nous si vous avez besoin d'un autre.",
+    cta_h:"Prêt à passer commande ?", cta_p:"Écrivez-nous votre serveur et la quantité.",
+    disclaimer:"n'est pas affilié à NCSOFT. Aion est une marque de son propriétaire."
+  },
+  ru: {
+    title:"Заказы Kinah для Aion 2", meta:"Заказы Kinah для международного сервера Aion 2. Свяжитесь с нами, чтобы узнать цену.",
+    h1:"Заказы Kinah для международного сервера Aion 2.",
+    lead:"Мы принимаем заказы на Kinah для Северной Америки (Восток), Северной Америки (Запад), Европы и Южной Америки. Напишите, что вам нужно, и мы пришлём цену.",
+    contact:"Связаться с нами", prices_h:"Серверы и цены", th_server:"Сервер", th_faction:"Фракция", th_price:"Цена",
+    na_east:"Северная Америка, Восток", na_west:"Северная Америка, Запад", eu:"Европа", sa:"Южная Америка",
+    elyos:"Элийцы", asmo:"Асмодиане", both:"Обе", quote:"Цена по запросу",
+    price_note:"Цена зависит от объёма и рынка, поэтому мы называем её для каждого заказа отдельно.",
+    how_h:"Как проходит заказ",
+    s1_t:"Свяжитесь с нами и опишите заказ", s1_d:"Укажите сервер, фракцию и сколько Kinah вам нужно.",
+    s2_t:"Подтвердите цену", s2_d:"Мы ответим с ценой. Продолжайте, только если вас всё устраивает.",
+    s3_t:"Вы выставляете предмет, мы покупаем", s3_d:"Вы выставляете материал на аукцион в игре по согласованной цене. Мы покупаем его и присылаем вам скриншот покупки.",
+    s4_t:"Проверьте и подтвердите", s4_d:"Проверьте, что Kinah пришли, и подтвердите получение.",
+    faq_h:"Частые вопросы",
+    q1:"Что нужно отправить, чтобы узнать цену?", a1:"Ваш сервер (NA Восток, NA Запад, Европа или Южная Америка), фракцию, если она важна, и нужное количество Kinah.",
+    q2:"Как определяется цена?", a2:"Она зависит от сервера и объёма. Отправьте заказ, и мы назовём цену до любых договорённостей.",
+    q3:"Как происходит передача?", a3:"Вы выставляете материал на аукцион в игре по согласованной цене. Мы покупаем его и присылаем скриншот покупки, после чего вы проверяете Kinah и подтверждаете.",
+    q4:"Нужен ли вам пароль от моего аккаунта?", a4:"Нет. Мы никогда не просим пароль.",
+    q5:"Как оплатить?", a5:"Способ оплаты мы согласуем с вами после того, как цена будет подтверждена.",
+    q6:"Какие серверы вы обслуживаете?", a6:"Северная Америка, Восток и Запад (Элийцы и Асмодиане), Европа и Южная Америка. Спросите, если нужен другой.",
+    cta_h:"Готовы сделать заказ?", cta_p:"Напишите нам свой сервер и количество.",
+    disclaimer:"не связан с NCSOFT. Aion — товарный знак его владельца."
+  },
+  zh: {
+    title:"Aion 2 基纳（Kinah）代购", meta:"永恒之塔2国际服基纳（Kinah）代购，联系我们获取报价。",
+    h1:"永恒之塔2（Aion 2）国际服基纳代购。",
+    lead:"我们承接北美东部、北美西部、欧洲和南美的基纳订单。告诉我们你需要多少，我们会给你报价。",
+    contact:"联系我们", prices_h:"区服与价格", th_server:"区服", th_faction:"阵营", th_price:"价格",
+    na_east:"北美东部", na_west:"北美西部", eu:"欧服", sa:"南美",
+    elyos:"天族", asmo:"魔族", both:"两个阵营", quote:"联系询价",
+    price_note:"价格随数量和市场变化，所以每笔订单都单独报价。",
+    how_h:"下单流程",
+    s1_t:"联系我们，说明订单", s1_d:"告诉我们区服、阵营和需要的基纳数量。",
+    s2_t:"确认价格", s2_d:"我们回复报价，你同意后再继续。",
+    s3_t:"你挂材料，我们购买", s3_d:"你在游戏交易行按约定价格挂出一件材料，我们购买并把购买截图发给你。",
+    s4_t:"核对并确认", s4_d:"确认基纳已到账，然后确认收货。",
+    faq_h:"常见问题",
+    q1:"报价需要提供什么信息？", a1:"你的区服（美东、美西、欧服或南美）、阵营（如适用）以及需要的基纳数量。",
+    q2:"价格是怎么定的？", a2:"取决于区服和数量。把订单发给我们，在约定之前我们会先给你报价。",
+    q3:"怎么交付？", a3:"你在游戏交易行按约定价格挂出一件材料，我们购买并把购买截图发给你，然后你核对基纳并确认。",
+    q4:"需要我的账号密码吗？", a4:"不需要。我们绝不会向你索要密码。",
+    q5:"怎么付款？", a5:"价格确定后，我们会和你确认付款方式。",
+    q6:"支持哪些区服？", a6:"北美东部和西部（天族、魔族）、欧服和南美。需要其他区服请先问我们。",
+    cta_h:"准备下单了吗？", cta_p:"联系我们，告诉我们你的区服和数量。",
+    disclaimer:"与 NCSOFT 无关联。Aion 是其所有者的商标。"
+  }
+};
+
+var KEY = "lang";
+function supported(c){ return T.hasOwnProperty(c); }
+function detect(){
+  try { var s = localStorage.getItem(KEY); if (s && supported(s)) return s; } catch (e) {}
+  var list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"];
+  for (var i = 0; i < list.length; i++) {
+    var c = String(list[i]).toLowerCase().split("-")[0];
+    if (supported(c)) return c;
+  }
+  return "en";
+}
+function apply(code){
+  var d = T[code] || T.en;
+  document.documentElement.lang = code;
+  document.querySelectorAll("[data-i18n]").forEach(function (el) {
+    var k = el.getAttribute("data-i18n");
+    if (d[k] !== undefined) el.textContent = d[k];
+  });
+  document.querySelectorAll("[data-site-name]").forEach(function (el) { el.textContent = SITE_NAME; });
+  document.title = SITE_NAME + " – " + d.title;
+  var m = document.querySelector('meta[name="description"]');
+  if (m) m.setAttribute("content", d.meta);
+  document.getElementById("lang").value = code;
+}
+
+var link = (CONTACT_LINK.charAt(0) === "[") ? "#" : CONTACT_LINK;   // stays "#" until you set a real link
+document.querySelectorAll("[data-contact]").forEach(function (a) { a.href = link; });
+
+var sel = document.getElementById("lang");
+sel.addEventListener("change", function () {
+  try { localStorage.setItem(KEY, sel.value); } catch (e) {}
+  apply(sel.value);
+});
+apply(detect());
 </script>
 </body>
 </html>
