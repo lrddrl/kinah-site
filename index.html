@@ -47,6 +47,19 @@ h2{font-size:22px;margin:0 0 16px}
 .gtitle{font-size:26px;font-weight:700;line-height:1.2}
 .gsub{color:var(--muted);font-size:14px}
 .reset{background:none;border:0;color:var(--muted);font:inherit;font-size:14px;cursor:pointer}
+.gl{display:flex;gap:14px;align-items:center}
+.gr{display:flex;gap:22px;align-items:center}
+.glogo{width:64px;height:64px;border-radius:14px;background:#12141c;color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex:none}
+.hist{color:var(--accent);font-weight:600;font-size:14px;white-space:nowrap}
+.hist::after,.dd::after{content:"";display:inline-block;border:5px solid transparent;border-top-color:currentColor;margin-left:6px;vertical-align:-2px}
+.chip.static:hover{background:none}
+.chip.static[aria-pressed="true"]:hover{background:var(--on-bg)}
+.okbtn{background:#f5f6fa;border:1px solid #dcdfe6;color:#666;border-radius:4px;padding:3px 12px;font:inherit;font-size:14px;cursor:pointer}
+input[type=text].mini{width:80px;padding:4px 8px;border-radius:4px;font-size:14px}
+.pr{display:inline-flex;align-items:center;gap:6px;margin-left:12px}
+.qs{position:relative;display:inline-block;max-width:100%}
+input[type=text].qsin{width:320px;max-width:100%;padding:8px 76px 8px 12px;border-radius:14px}
+.qs button{position:absolute;right:4px;top:4px;bottom:4px;background:var(--accent);color:#fff;border:0;border-radius:10px;padding:0 14px;font:inherit;font-size:14px;cursor:pointer}
 .reset::before{content:"\21BB  "}
 input[type=text].search{padding-left:34px;background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23999' stroke-width='1.6'><circle cx='7' cy='7' r='5'/><path d='M11 11l4 4'/></svg>") no-repeat 10px center}
 .hint{color:var(--muted);font-size:14px;margin:10px 0 0}
@@ -78,6 +91,8 @@ footer{border-top:1px solid var(--line);padding:20px 0 32px;color:var(--muted);f
   .btn{display:block;text-align:center;width:100%}
   .row{grid-template-columns:1fr;gap:6px;padding:14px 0}
   .lbl{padding-top:0}
+  .gamehead{flex-wrap:wrap}
+  .pr{margin-left:0}
   .panel{padding:2px 14px}
   .fields{grid-template-columns:1fr}
   table{min-width:0}
@@ -112,13 +127,13 @@ footer{border-top:1px solid var(--line);padding:20px 0 32px;color:var(--muted);f
 
   <section id="order">
     <div class="gamehead">
-      <div><div class="gtitle" data-i18n="game_title">Aion 2 International Server</div><div class="gsub" data-i18n="game_sub">Online game</div></div>
-      <button class="reset" type="button" id="reset" data-i18n="reset">Reset all</button>
+      <div class="gl"><div class="glogo">AION 2</div><div><div class="gtitle" data-i18n="game_title">Aion 2 International Server</div><div class="gsub" data-i18n="game_sub">Online game</div></div></div>
+      <div class="gr"><button class="reset" type="button" id="reset" data-i18n="reset">Reset all</button><span class="hist" data-i18n="history">Filter history</span></div>
     </div>
     <div class="panel">
       <div class="row">
         <div class="lbl" data-i18n="f_type">Product type</div>
-        <div class="chips"><button class="chip static" type="button" aria-pressed="true" data-i18n="kinah">Kinah</button></div>
+        <div class="chips" id="types"></div>
       </div>
       <div class="row">
         <div class="lbl" data-i18n="f_region">Region</div>
@@ -141,6 +156,13 @@ footer{border-top:1px solid var(--line);padding:20px 0 32px;color:var(--muted);f
           </div>
         </div>
       </div>
+      <div class="row"><div class="lbl" data-i18n="price_h">Price range</div><div class="chips" id="pricer"></div></div>
+      <div class="row"><div class="lbl" data-i18n="ship_h">Deliveries</div><div class="chips" id="shipr"></div></div>
+      <div class="row"><div class="lbl" data-i18n="part_h">Partial delivery</div><div class="chips" id="partr"></div></div>
+      <div class="row"><div class="lbl" data-i18n="more_h">Other options</div><div class="chips" id="morer"></div></div>
+      <div class="row"><div class="lbl" data-i18n="quick_h">Quick search</div><div id="quickr"></div></div>
+    </div>
+    <div class="panel" style="margin-top:16px">
       <div class="row">
         <div class="lbl" data-i18n="f_char">Character name</div>
         <div><input type="text" id="char" data-i18n-ph="char_ph" placeholder="Your in-game character name" autocomplete="off"></div>
@@ -256,6 +278,7 @@ var T = {
     lead:"We take Kinah orders for Europe, Asia, North America West, North America East and South America. Choose your server below and we will send you a quote.",
     contact:"Contact us",
     game_title:"Aion 2 International Server", game_sub:"Online game", reset:"Reset all",
+    pink:"Pink Diamonds", account:"Game accounts", gear:"Gear", enh:"Enhancement stones", brk:"Breakthrough stones", alt:"Alt accounts", other:"Other", misc:"Misc", cdk:"CDK", topup:"Game top-up", merchant:"Merchant leveling", price_h:"Price range", ship_h:"Deliveries", multi:"Multiple trades", single:"Single trade", part_h:"Partial delivery", nopart:"Not supported", part:"Supported", more_h:"Other options", guarantee:"Service guarantee", ttype:"Trade type", quick_h:"Quick search", ok:"OK", search_btn:"Search", history:"Filter history",
     sel_h:"Build your order", f_type:"Product type", kinah:"Kinah", f_region:"Region", f_faction:"Faction", all:"All", f_world:"Game server",
     search_ph:"Search", collapse:"Collapse", expand:"Expand",
     world_note:"Server names for this selection are not listed yet. Choose All and tell us your game server when you contact us.",
@@ -286,6 +309,7 @@ var T = {
     lead:"Aceptamos pedidos de Kinah para Europa, Asia, Norteamérica Oeste, Norteamérica Este y Sudamérica. Elige tu servidor abajo y te enviaremos un presupuesto.",
     contact:"Contáctanos",
     game_title:"Aion 2 Servidor Internacional", game_sub:"Juego en línea", reset:"Restablecer todo",
+    pink:"Diamantes rosas", account:"Cuentas de juego", gear:"Equipo", enh:"Piedras de mejora", brk:"Piedras de avance", alt:"Cuentas secundarias", other:"Otros", misc:"Varios", cdk:"CDK", topup:"Recarga de juego", merchant:"Subida por comerciante", price_h:"Rango de precio", ship_h:"Entregas", multi:"Varias operaciones", single:"Una operación", part_h:"Entrega parcial", nopart:"No admitida", part:"Admitida", more_h:"Otras opciones", guarantee:"Garantía de servicio", ttype:"Tipo de operación", quick_h:"Búsqueda rápida", ok:"Aceptar", search_btn:"Buscar", history:"Historial de filtros",
     sel_h:"Arma tu pedido", f_type:"Tipo de producto", kinah:"Kinah", f_region:"Región", f_faction:"Facción", all:"Todos", f_world:"Servidor de juego",
     search_ph:"Buscar", collapse:"Contraer", expand:"Expandir",
     world_note:"Aún no hay nombres de servidor para esta selección. Elige Todos y dinos tu servidor de juego al contactarnos.",
@@ -316,6 +340,7 @@ var T = {
     lead:"Aceitamos pedidos de Kinah para Europa, Ásia, América do Norte Oeste, América do Norte Leste e América do Sul. Escolha seu servidor abaixo e enviaremos um orçamento.",
     contact:"Fale conosco",
     game_title:"Aion 2 Servidor Internacional", game_sub:"Jogo online", reset:"Redefinir tudo",
+    pink:"Diamantes rosa", account:"Contas de jogo", gear:"Equipamento", enh:"Pedras de aprimoramento", brk:"Pedras de avanço", alt:"Contas secundárias", other:"Outros", misc:"Diversos", cdk:"CDK", topup:"Recarga de jogo", merchant:"Impulso por lojista", price_h:"Faixa de preço", ship_h:"Entregas", multi:"Várias negociações", single:"Negociação única", part_h:"Entrega parcial", nopart:"Não suportada", part:"Suportada", more_h:"Outras opções", guarantee:"Garantia de serviço", ttype:"Tipo de negociação", quick_h:"Busca rápida", ok:"OK", search_btn:"Buscar", history:"Histórico de filtros",
     sel_h:"Monte seu pedido", f_type:"Tipo de produto", kinah:"Kinah", f_region:"Região", f_faction:"Facção", all:"Todos", f_world:"Servidor do jogo",
     search_ph:"Buscar", collapse:"Recolher", expand:"Expandir",
     world_note:"Ainda não há nomes de servidor para esta seleção. Escolha Todos e informe seu servidor do jogo ao falar conosco.",
@@ -346,6 +371,7 @@ var T = {
     lead:"Wir nehmen Kinah-Bestellungen für Europa, Asien, Nordamerika West, Nordamerika Ost und Südamerika an. Wähle unten deinen Server aus und wir senden dir ein Angebot.",
     contact:"Kontakt aufnehmen",
     game_title:"Aion 2 Internationaler Server", game_sub:"Online-Spiel", reset:"Alles zurücksetzen",
+    pink:"Pinke Diamanten", account:"Spielkonten", gear:"Ausrüstung", enh:"Verstärkungssteine", brk:"Durchbruchsteine", alt:"Zweitkonten", other:"Sonstiges", misc:"Verschiedenes", cdk:"CDK", topup:"Spiel-Aufladung", merchant:"Händler-Leveling", price_h:"Preisbereich", ship_h:"Lieferungen", multi:"Mehrere Trades", single:"Einzelner Trade", part_h:"Teillieferung", nopart:"Nicht unterstützt", part:"Unterstützt", more_h:"Weitere Optionen", guarantee:"Servicegarantie", ttype:"Handelsart", quick_h:"Schnellsuche", ok:"OK", search_btn:"Suchen", history:"Filterverlauf",
     sel_h:"Bestellung zusammenstellen", f_type:"Produkttyp", kinah:"Kinah", f_region:"Region", f_faction:"Fraktion", all:"Alle", f_world:"Spielserver",
     search_ph:"Suchen", collapse:"Einklappen", expand:"Ausklappen",
     world_note:"Für diese Auswahl sind noch keine Servernamen hinterlegt. Wähle Alle und nenne uns deinen Spielserver beim Kontakt.",
@@ -376,6 +402,7 @@ var T = {
     lead:"Nous prenons des commandes de Kinah pour l'Europe, l'Asie, l'Amérique du Nord Ouest, l'Amérique du Nord Est et l'Amérique du Sud. Choisissez votre serveur ci-dessous et nous vous enverrons un devis.",
     contact:"Nous contacter",
     game_title:"Aion 2 Serveur international", game_sub:"Jeu en ligne", reset:"Tout réinitialiser",
+    pink:"Diamants roses", account:"Comptes de jeu", gear:"Équipement", enh:"Pierres d'amélioration", brk:"Pierres de percée", alt:"Comptes secondaires", other:"Autre", misc:"Divers", cdk:"CDK", topup:"Recharge de jeu", merchant:"Leveling marchand", price_h:"Fourchette de prix", ship_h:"Livraisons", multi:"Plusieurs transactions", single:"Transaction unique", part_h:"Livraison partielle", nopart:"Non prise en charge", part:"Prise en charge", more_h:"Autres options", guarantee:"Garantie de service", ttype:"Type de transaction", quick_h:"Recherche rapide", ok:"OK", search_btn:"Rechercher", history:"Historique des filtres",
     sel_h:"Composez votre commande", f_type:"Type de produit", kinah:"Kinah", f_region:"Région", f_faction:"Faction", all:"Tous", f_world:"Serveur de jeu",
     search_ph:"Rechercher", collapse:"Réduire", expand:"Développer",
     world_note:"Les noms de serveur pour cette sélection ne sont pas encore listés. Choisissez Tous et indiquez-nous votre serveur de jeu en nous contactant.",
@@ -406,6 +433,7 @@ var T = {
     lead:"Мы принимаем заказы на Kinah для Европы, Азии, Северной Америки (Запад и Восток) и Южной Америки. Выберите сервер ниже, и мы пришлём цену.",
     contact:"Связаться с нами",
     game_title:"Aion 2 Международный сервер", game_sub:"Онлайн-игра", reset:"Сбросить всё",
+    pink:"Розовые алмазы", account:"Игровые аккаунты", gear:"Экипировка", enh:"Камни усиления", brk:"Камни прорыва", alt:"Доп. аккаунты", other:"Другое", misc:"Разное", cdk:"CDK", topup:"Пополнение игры", merchant:"Прокачка от продавца", price_h:"Диапазон цен", ship_h:"Выдачи", multi:"Несколько сделок", single:"Одна сделка", part_h:"Частичная выдача", nopart:"Не поддерживается", part:"Поддерживается", more_h:"Другие параметры", guarantee:"Гарантия сервиса", ttype:"Тип сделки", quick_h:"Быстрый поиск", ok:"ОК", search_btn:"Поиск", history:"История фильтров",
     sel_h:"Соберите заказ", f_type:"Тип товара", kinah:"Kinah", f_region:"Регион", f_faction:"Фракция", all:"Все", f_world:"Игровой сервер",
     search_ph:"Поиск", collapse:"Свернуть", expand:"Развернуть",
     world_note:"Названия серверов для этого выбора пока не добавлены. Выберите «Все» и укажите игровой сервер при обращении к нам.",
@@ -436,6 +464,7 @@ var T = {
     lead:"我们承接欧服、亚服、北美西、北美东和南美的基纳订单。在下方选好游戏服，我们给你报价。",
     contact:"联系我们",
     game_title:"永恒之塔2国际服", game_sub:"网络游戏", reset:"重置所有选项",
+    pink:"粉钻", account:"游戏账号", gear:"装备", enh:"强化石", brk:"突破石", alt:"游戏小号", other:"其他", misc:"杂货", cdk:"CDK", topup:"游戏代充", merchant:"商家代练", price_h:"价格区间", ship_h:"发货笔数", multi:"多笔交易", single:"单笔交易", part_h:"是否支持部分", nopart:"不支持部分", part:"支持部分", more_h:"其他选项", guarantee:"服务保障", ttype:"交易类型", quick_h:"快捷搜索", ok:"确定", search_btn:"搜索", history:"历史筛选记录",
     sel_h:"选择订单", f_type:"商品类型", kinah:"基纳", f_region:"游戏服", f_faction:"种族", all:"全部", f_world:"游戏区",
     search_ph:"请输入关键字", collapse:"收起", expand:"展开",
     world_note:"该选项下的游戏区名称还未列出。请选「全部」，联系我们时告诉我们你的游戏区。",
@@ -518,6 +547,44 @@ function render(){
   summary();
 }
 
+var TYPE_KEYS = ["kinah","pink","account","gear","enh","brk","alt","other","misc","cdk","topup","merchant"];
+function vchip(label, group){
+  var b = chip(label, false, function () {
+    var on = b.getAttribute("aria-pressed") === "true";
+    group.querySelectorAll(".chip").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+    if (!on) b.setAttribute("aria-pressed", "true");
+  });
+  return b;
+}
+function renderStatic(){
+  var ty = $("types"); ty.textContent = "";
+  TYPE_KEYS.forEach(function (k, i) { var b = chip(t(k), i === 0, function () {}); if (i) b.classList.add("static"); ty.appendChild(b); });
+
+  var pr = $("pricer"); pr.textContent = "";
+  var zh = cur === "zh", sym = zh ? "\u00a5" : "$";
+  (zh ? ["200\u4ee5\u5185","200-500","500-1000","1000-2000","2000\u4ee5\u4e0a"] : ["<200","200-500","500-1000","1000-2000",">2000"])
+    .forEach(function (l) { pr.appendChild(vchip(l, pr)); });
+  var box = document.createElement("span"); box.className = "pr";
+  var a = document.createElement("input"); a.type = "text"; a.className = "mini"; a.placeholder = sym;
+  var c = document.createElement("input"); c.type = "text"; c.className = "mini"; c.placeholder = sym;
+  var ok = document.createElement("button"); ok.type = "button"; ok.className = "okbtn"; ok.textContent = t("ok");
+  box.appendChild(a); box.appendChild(document.createTextNode("-")); box.appendChild(c); box.appendChild(ok);
+  pr.appendChild(box);
+
+  var sh = $("shipr"); sh.textContent = "";
+  ["multi","single"].forEach(function (k) { sh.appendChild(vchip(t(k), sh)); });
+  var pa = $("partr"); pa.textContent = "";
+  ["nopart","part"].forEach(function (k) { pa.appendChild(vchip(t(k), pa)); });
+  var mo = $("morer"); mo.textContent = "";
+  ["guarantee","ttype"].forEach(function (k) { var b = chip(t(k), false, function () {}); b.classList.add("dd"); mo.appendChild(b); });
+
+  var q = $("quickr"); q.textContent = "";
+  var w = document.createElement("div"); w.className = "qs";
+  var qi = document.createElement("input"); qi.type = "text"; qi.className = "qsin"; qi.placeholder = t("search_ph");
+  var qb = document.createElement("button"); qb.type = "button"; qb.textContent = t("search_btn");
+  w.appendChild(qi); w.appendChild(qb); q.appendChild(w);
+}
+
 function summary(){
   var worldTxt = "All";
   var list = WORLDS[state.region + "|" + state.faction];
@@ -552,6 +619,7 @@ function apply(code){
   if (m) m.setAttribute("content", d.meta);
   $("lang").value = code;
   render();
+  renderStatic();
 }
 
 var link = (CONTACT_LINK.charAt(0) === "[") ? "#" : CONTACT_LINK;   // stays "#" until you set a real link
@@ -567,7 +635,7 @@ $("char").addEventListener("input", summary);
 $("amount").addEventListener("input", summary);
 $("reset").addEventListener("click", function () {
   state = { region: "eu", faction: "all", world: "all", q: "", collapsed: false };
-  $("search").value = ""; $("char").value = ""; $("amount").value = ""; render();
+  $("search").value = ""; $("char").value = ""; $("amount").value = ""; render(); renderStatic();
 });
 $("copy").addEventListener("click", function () {
   var text = $("summary").textContent, btn = this;
