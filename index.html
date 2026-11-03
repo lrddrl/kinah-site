@@ -57,8 +57,10 @@ h2{font-size:22px;margin:0 0 16px}
 .okbtn{background:#f5f6fa;border:1px solid #dcdfe6;color:#666;border-radius:4px;padding:3px 12px;font:inherit;font-size:14px;cursor:pointer}
 input[type=text].mini{width:80px;padding:4px 8px;border-radius:4px;font-size:14px}
 .pr{display:inline-flex;align-items:center;gap:6px;margin-left:12px}
-.qs{position:relative;display:inline-block;max-width:100%}
-input[type=text].qsin{width:320px;max-width:100%;padding:8px 76px 8px 12px;border-radius:14px}
+.row>*{min-width:0}
+.row input{max-width:100%}
+.qs{position:relative;display:block;max-width:320px}
+input[type=text].qsin{width:100%;padding:8px 76px 8px 12px;border-radius:14px}
 .qs button{position:absolute;right:4px;top:4px;bottom:4px;background:var(--accent);color:#fff;border:0;border-radius:10px;padding:0 14px;font:inherit;font-size:14px;cursor:pointer}
 .reset::before{content:"\21BB  "}
 input[type=text].search{padding-left:34px;background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23999' stroke-width='1.6'><circle cx='7' cy='7' r='5'/><path d='M11 11l4 4'/></svg>") no-repeat 10px center}
@@ -89,8 +91,9 @@ details p{margin:0 0 14px;color:var(--muted)}
 footer{border-top:1px solid var(--line);padding:20px 0 32px;color:var(--muted);font-size:13px;text-align:center}
 @media (max-width:560px){
   .btn{display:block;text-align:center;width:100%}
-  .row{grid-template-columns:1fr;gap:6px;padding:14px 0}
-  .lbl{padding-top:0}
+  .row{grid-template-columns:84px 1fr;gap:8px;padding:14px 0}
+  .lbl{font-size:14px}
+  .chip{padding:5px 10px}
   .gamehead{flex-wrap:wrap}
   .pr{margin-left:0}
   .panel{padding:2px 14px}
