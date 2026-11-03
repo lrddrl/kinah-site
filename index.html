@@ -254,14 +254,19 @@ var CONTACT_LINK = "[YOUR_LINK]";   // where the Contact buttons go
 var SITE_NAME    = "[Site Name]";
 /* ============================================================================== */
 
-/* Game servers (worlds). Only Europe + Elyos is known so far; add more lists here.
-   Format: [name, number]  (number is the Elyos/Asmodian server number, or null) */
+/* Game servers (worlds) for every region + faction, read from the DD373 listing pages.
+   Format: [name, number]  (number = server number, or null) */
 var WORLDS = {
-  "eu|elyos": [["Siel",1],["Nezekan",2],["Vaizel",3],["Kaisinel",4],["Meslamtaeda",8],["Fregion",7],["Yustiel",5],["Ariel",6],
-    ["Hithanya",9],["Daminu",14],["Tsenka",17],["Nania",10],["Tahavatha",11],["Luteros",12],["Phernos",13],["Kasaka",15],
-    ["Bakarma",16],["Kochi",18],["Lamuatan",22],["Ishtar",19],["Tiamat",20],["Gauss",21],["Nathara",null]],
-  "eu|asmo": [["Baba",18]],
-  "asia|elyos": [["Siel",1],["Nezakan",2],["Vaizel",3],["Kaisinel",4],["Yustiel",5],["Ariel",6],["Fregion",7],["Meslamtaeda",8],["Hithanya",9],["Nania",10]]
+  "eu|elyos": [["Siel",1],["Nezekan",2],["Vaizel",3],["Kaisinel",4],["Meslamtaeda",8],["Fregion",7],["Yustiel",5],["Ariel",6],["Hithanya",9],["Daminu",14],["Tsenka",17],["Nania",10],["Tahavatha",11],["Luteros",12],["Phernos",13],["Kasaka",15],["Bakarma",16],["Kochi",18],["Lamuatan",22],["Ishtar",19],["Tiamat",20],["Gauss",21],["Nathara",null]],
+  "eu|asmo": [["Israphel",1],["Zikel",2],["Triniel",3],["Lumiel",4],["Beritra",8],["Ereshkigal",7],["Marchutan",5],["Azphel",6],["Nemon",9],["Quai",17],["Hadala",10],["Ludra",11],["Ulgorn",12],["Mumin",13],["Odar",14],["Zemurru",15],["Kromede",16],["Baba",18],["Fafnir",19],["Indnath",20],["Agnita",21],["Atiel",22],["Tassin",23],["Altgard",null]],
+  "asia|elyos": [["Siel",1],["Nezakan",2],["Vaizel",3],["Kaisinel",4],["Yustiel",5],["Ariel",6],["Fregion",7],["Meslamtaeda",8],["Hithanya",9],["Nania",10]],
+  "asia|asmo": [["Israphel",1],["Zikel",2],["Triniel",3],["Lumiel",4],["Marchutan",5],["Azphel",6],["Ereshkigal",7],["Beritra",8],["Nemon",9],["Hadala",10]],
+  "na_west|elyos": [["Siel",1],["Nezekan",2],["Vaizel",3],["Kaisinel",4],["Yustiel",5]],
+  "na_west|asmo": [["Israphel",1],["Zikel",2],["Triniel",3],["Lumiel",4],["Marchutan",5]],
+  "na_east|elyos": [["Siel",1],["Nezekan",2],["Vaizel",3],["Kaisinel",4],["Yustiel",5],["Ariel",6],["Fregion",7],["Meslamtaeda",8],["Hithanya",9]],
+  "na_east|asmo": [["Israphel",1],["Zikel",2],["Triniel",3],["Lumiel",4],["Marchutan",5],["Azphel",6],["Ereshkigal",7],["Beritra",8],["Nemon",9]],
+  "sa|elyos": [["Siel",1],["Nezekan",2],["Vaizel",3],["Kaisinel",4],["Yustiel",5],["Ariel",6]],
+  "sa|asmo": [["Israphel",1],["Zikel",2],["Triniel",3],["Lumiel",4],["Marchutan",5],["Azphel",6]]
 };
 
 /* ===== YOUR OFFERS: edit / add lines here. This is what the list shows. =====
