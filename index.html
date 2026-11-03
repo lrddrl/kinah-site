@@ -168,6 +168,10 @@ input[type=number].qty{width:110px;padding:5px 8px;font-size:14px;border-radius:
 .hdd{left:auto;right:0;min-width:260px}
 .htip{font-size:13px;color:var(--muted);padding:4px 6px 8px}
 input[type=text].qsin.search{padding-left:34px}
+.ava{image-rendering:pixelated;object-fit:cover}
+.sortbar{justify-content:flex-start}
+.sortbar .pinfo{margin:0 0 0 auto}
+.sbtn{display:inline-flex;align-items:center;gap:4px}
 </style>
 </head>
 <body>
@@ -217,8 +221,7 @@ input[type=text].qsin.search{padding-left:34px}
     <div class="row"><div class="lbl" data-i18n="quick_h">Quick search</div><div id="quickr"></div></div>
   </div>
 
-  <div class="sortbar"><div class="chips" id="sorts"></div><a class="sbtn" href="#" data-i18n="sell">Sell with us</a></div>
-  <div class="pinfo"><span id="count"></span><span data-i18n="perpage">20 / page</span><b id="pnow"></b><span data-i18n="goto">Go to</span><input type="text" class="mini" id="gotoTop"><span data-i18n="page_w">page</span><button class="okbtn" type="button" id="goTop" data-i18n="ok">OK</button></div>
+  <div class="sortbar"><div class="chips" id="sorts"></div><a class="sbtn" href="#" ><span class="sicon">&#9998;</span><span data-i18n="sell">Sell with us</span></a><div class="pinfo"><span id="count"></span><span data-i18n="perpage">20 / page</span><b id="pnow"></b><span data-i18n="goto">Go to</span><input type="text" class="mini" id="gotoTop"><span data-i18n="page_w">page</span><button class="okbtn" type="button" id="goTop" data-i18n="ok">OK</button></div></div>
   <div id="offers"></div>
   <div class="pager" id="pager"></div>
 </main>
@@ -260,12 +263,79 @@ var WORLDS = {
    please check min and stock, and add your other offers. */
 var CURRENCY = "\u00a5";
 var OFFERS = [
-  /* rate = completion rate %, credit = credit level. null = left empty for now (shows "—"). */
-  {region:"eu", faction:"asmo", world:"Baba", wnum:18, multi:true, partial:false, perWan:0.029, min:20000000, stock:20000000, rate:null, credit:null},
-  /* PLACEHOLDERS: fill in or delete */
-  {region:"eu", faction:"elyos", world:"Siel", wnum:1, multi:false, partial:false, perWan:null, min:null, stock:null, rate:null, credit:null},
-  {region:"asia", faction:"elyos", world:"Nania", wnum:10, multi:false, partial:false, perWan:null, min:null, stock:null, rate:null, credit:null},
-  {region:"na_west", faction:"elyos", world:"Kaisinel", wnum:4, multi:false, partial:false, perWan:null, min:null, stock:null, rate:null, credit:null}
+  /* rate = completion rate %, credit = hearts (1-4), t = publish order (bigger = newer). */
+  {region:"eu", faction:"asmo", world:"Baba", wnum:18, multi:true, partial:false, perWan:0.029, min:20000000, stock:20000000, rate:null, credit:null, t:100001},
+  /* ===== DEMO DATA (made up, for layout only) - replace with your real offers before going live ===== */
+  {region:"na_west", faction:"asmo", world:"Marchutan", wnum:5, multi:true, partial:false, perWan:0.0249, min:40000000, stock:200000000, rate:93.0, credit:1, t:79388},
+  {region:"na_west", faction:"elyos", world:"Nezekan", wnum:2, multi:true, partial:false, perWan:0.0299, min:30000000, stock:30000000, rate:85.9, credit:1, t:58580},
+  {region:"eu", faction:"elyos", world:"Lamuatan", wnum:22, multi:true, partial:false, perWan:0.0369, min:10000000, stock:100000000, rate:91.3, credit:3, t:59473},
+  {region:"sa", faction:"asmo", world:"Marchutan", wnum:5, multi:true, partial:false, perWan:0.0245, min:1000000, stock:3000000, rate:96.7, credit:4, t:36072},
+  {region:"eu", faction:"elyos", world:"Tiamat", wnum:20, multi:false, partial:true, perWan:0.0461, min:5000000, stock:5000000, rate:80.0, credit:3, t:48467},
+  {region:"asia", faction:"asmo", world:"Azphel", wnum:6, multi:false, partial:true, perWan:0.0417, min:10000000, stock:30000000, rate:77.0, credit:1, t:6152},
+  {region:"na_east", faction:"asmo", world:"Nemon", wnum:9, multi:false, partial:true, perWan:0.0481, min:1000000, stock:5000000, rate:79.5, credit:4, t:38766},
+  {region:"eu", faction:"asmo", world:"Tassin", wnum:23, multi:false, partial:false, perWan:0.0273, min:1000000, stock:1000000, rate:88.7, credit:3, t:41548},
+  {region:"na_west", faction:"asmo", world:"Marchutan", wnum:5, multi:true, partial:false, perWan:0.0243, min:10000000, stock:20000000, rate:79.9, credit:4, t:67756},
+  {region:"sa", faction:"elyos", world:"Nezekan", wnum:2, multi:false, partial:false, perWan:0.0298, min:10000000, stock:10000000, rate:88.5, credit:2, t:86273},
+  {region:"sa", faction:"asmo", world:"Marchutan", wnum:5, multi:true, partial:false, perWan:0.0478, min:40000000, stock:120000000, rate:77.7, credit:4, t:76583},
+  {region:"na_east", faction:"asmo", world:"Azphel", wnum:6, multi:false, partial:false, perWan:0.0390, min:20000000, stock:40000000, rate:87.2, credit:3, t:36086},
+  {region:"eu", faction:"elyos", world:"Nezekan", wnum:2, multi:false, partial:true, perWan:0.0286, min:5000000, stock:25000000, rate:90.7, credit:3, t:52238},
+  {region:"eu", faction:"elyos", world:"Hithanya", wnum:9, multi:false, partial:false, perWan:0.0443, min:40000000, stock:40000000, rate:88.3, credit:1, t:14805},
+  {region:"asia", faction:"asmo", world:"Nemon", wnum:9, multi:false, partial:false, perWan:0.0235, min:30000000, stock:150000000, rate:92.5, credit:1, t:30883},
+  {region:"eu", faction:"elyos", world:"Hithanya", wnum:9, multi:true, partial:false, perWan:0.0327, min:60000000, stock:180000000, rate:80.5, credit:1, t:47563},
+  {region:"asia", faction:"asmo", world:"Beritra", wnum:8, multi:false, partial:false, perWan:0.0405, min:20000000, stock:20000000, rate:99.9, credit:3, t:7939},
+  {region:"asia", faction:"asmo", world:"Triniel", wnum:3, multi:true, partial:false, perWan:0.0307, min:40000000, stock:40000000, rate:94.0, credit:3, t:92242},
+  {region:"na_west", faction:"elyos", world:"Yustiel", wnum:5, multi:true, partial:false, perWan:0.0252, min:60000000, stock:300000000, rate:83.3, credit:3, t:18028},
+  {region:"na_west", faction:"elyos", world:"Yustiel", wnum:5, multi:false, partial:false, perWan:0.0440, min:10000000, stock:10000000, rate:89.8, credit:3, t:54410},
+  {region:"asia", faction:"asmo", world:"Azphel", wnum:6, multi:false, partial:false, perWan:0.0255, min:10000000, stock:50000000, rate:76.5, credit:1, t:50623},
+  {region:"sa", faction:"asmo", world:"Lumiel", wnum:4, multi:true, partial:false, perWan:0.0455, min:5000000, stock:5000000, rate:82.9, credit:2, t:51242},
+  {region:"asia", faction:"elyos", world:"Meslamtaeda", wnum:8, multi:false, partial:false, perWan:0.0431, min:5000000, stock:5000000, rate:85.6, credit:2, t:23498},
+  {region:"eu", faction:"asmo", world:"Quai", wnum:17, multi:true, partial:false, perWan:0.0341, min:5000000, stock:15000000, rate:84.1, credit:1, t:42003},
+  {region:"sa", faction:"elyos", world:"Vaizel", wnum:3, multi:false, partial:false, perWan:0.0402, min:60000000, stock:300000000, rate:96.0, credit:2, t:8030},
+  {region:"na_west", faction:"elyos", world:"Yustiel", wnum:5, multi:true, partial:false, perWan:0.0375, min:10000000, stock:10000000, rate:92.8, credit:4, t:52613},
+  {region:"asia", faction:"asmo", world:"Azphel", wnum:6, multi:true, partial:false, perWan:0.0370, min:1000000, stock:1000000, rate:83.5, credit:1, t:55090},
+  {region:"sa", faction:"asmo", world:"Marchutan", wnum:5, multi:false, partial:true, perWan:0.0428, min:10000000, stock:10000000, rate:78.4, credit:3, t:28161},
+  {region:"eu", faction:"asmo", world:"Mumin", wnum:13, multi:false, partial:false, perWan:0.0437, min:5000000, stock:5000000, rate:95.0, credit:1, t:90761},
+  {region:"na_east", faction:"elyos", world:"Ariel", wnum:6, multi:true, partial:false, perWan:0.0477, min:30000000, stock:60000000, rate:94.4, credit:1, t:32728},
+  {region:"sa", faction:"elyos", world:"Ariel", wnum:6, multi:true, partial:false, perWan:0.0247, min:30000000, stock:150000000, rate:81.7, credit:2, t:3790},
+  {region:"sa", faction:"asmo", world:"Lumiel", wnum:4, multi:false, partial:false, perWan:0.0277, min:40000000, stock:40000000, rate:82.6, credit:1, t:98901},
+  {region:"asia", faction:"elyos", world:"Kaisinel", wnum:4, multi:true, partial:false, perWan:0.0294, min:1000000, stock:1000000, rate:80.3, credit:4, t:85635},
+  {region:"sa", faction:"elyos", world:"Ariel", wnum:6, multi:true, partial:false, perWan:0.0342, min:10000000, stock:100000000, rate:90.2, credit:4, t:460},
+  {region:"na_east", faction:"elyos", world:"Siel", wnum:1, multi:false, partial:true, perWan:0.0427, min:30000000, stock:30000000, rate:88.4, credit:1, t:69546},
+  {region:"asia", faction:"elyos", world:"Nania", wnum:10, multi:true, partial:false, perWan:0.0493, min:10000000, stock:20000000, rate:82.8, credit:3, t:55781},
+  {region:"na_west", faction:"asmo", world:"Marchutan", wnum:5, multi:true, partial:false, perWan:0.0449, min:20000000, stock:40000000, rate:82.6, credit:4, t:68176},
+  {region:"sa", faction:"asmo", world:"Zikel", wnum:2, multi:false, partial:false, perWan:0.0496, min:10000000, stock:100000000, rate:78.4, credit:4, t:18440},
+  {region:"na_east", faction:"elyos", world:"Fregion", wnum:7, multi:false, partial:true, perWan:0.0419, min:60000000, stock:60000000, rate:78.2, credit:3, t:39970},
+  {region:"asia", faction:"elyos", world:"Nezakan", wnum:2, multi:false, partial:false, perWan:0.0461, min:10000000, stock:30000000, rate:84.5, credit:2, t:66771},
+  {region:"asia", faction:"elyos", world:"Ariel", wnum:6, multi:true, partial:true, perWan:0.0319, min:30000000, stock:30000000, rate:98.2, credit:1, t:28215},
+  {region:"eu", faction:"elyos", world:"Tiamat", wnum:20, multi:true, partial:false, perWan:0.0247, min:5000000, stock:5000000, rate:84.8, credit:4, t:58572},
+  {region:"eu", faction:"asmo", world:"Kromede", wnum:16, multi:true, partial:false, perWan:0.0443, min:1000000, stock:1000000, rate:81.1, credit:4, t:59235},
+  {region:"na_east", faction:"asmo", world:"Azphel", wnum:6, multi:false, partial:false, perWan:0.0481, min:20000000, stock:200000000, rate:86.1, credit:2, t:89036},
+  {region:"na_east", faction:"elyos", world:"Ariel", wnum:6, multi:true, partial:false, perWan:0.0270, min:10000000, stock:10000000, rate:92.5, credit:4, t:70826},
+  {region:"asia", faction:"elyos", world:"Hithanya", wnum:9, multi:false, partial:false, perWan:0.0242, min:20000000, stock:20000000, rate:93.2, credit:3, t:41446},
+  {region:"na_west", faction:"asmo", world:"Lumiel", wnum:4, multi:false, partial:false, perWan:0.0260, min:1000000, stock:1000000, rate:76.5, credit:3, t:36511},
+  {region:"na_west", faction:"asmo", world:"Israphel", wnum:1, multi:false, partial:false, perWan:0.0499, min:1000000, stock:1000000, rate:81.4, credit:1, t:29005},
+  {region:"na_west", faction:"elyos", world:"Yustiel", wnum:5, multi:false, partial:true, perWan:0.0393, min:10000000, stock:10000000, rate:92.3, credit:3, t:74451},
+  {region:"na_east", faction:"elyos", world:"Ariel", wnum:6, multi:false, partial:false, perWan:0.0375, min:60000000, stock:60000000, rate:83.9, credit:4, t:67730},
+  {region:"eu", faction:"asmo", world:"Nemon", wnum:9, multi:true, partial:false, perWan:0.0434, min:10000000, stock:50000000, rate:79.7, credit:1, t:25348},
+  {region:"na_east", faction:"elyos", world:"Meslamtaeda", wnum:8, multi:false, partial:true, perWan:0.0460, min:60000000, stock:300000000, rate:83.4, credit:2, t:70953},
+  {region:"asia", faction:"asmo", world:"Triniel", wnum:3, multi:false, partial:false, perWan:0.0328, min:20000000, stock:40000000, rate:97.9, credit:4, t:11872},
+  {region:"na_east", faction:"elyos", world:"Yustiel", wnum:5, multi:false, partial:false, perWan:0.0360, min:1000000, stock:10000000, rate:92.5, credit:4, t:21032},
+  {region:"eu", faction:"asmo", world:"Ludra", wnum:11, multi:true, partial:true, perWan:0.0495, min:40000000, stock:400000000, rate:94.2, credit:1, t:51940},
+  {region:"na_east", faction:"asmo", world:"Marchutan", wnum:5, multi:false, partial:false, perWan:0.0381, min:20000000, stock:20000000, rate:94.6, credit:2, t:91000},
+  {region:"na_east", faction:"asmo", world:"Marchutan", wnum:5, multi:true, partial:false, perWan:0.0365, min:20000000, stock:200000000, rate:95.4, credit:1, t:98802},
+  {region:"eu", faction:"asmo", world:"Tassin", wnum:23, multi:false, partial:true, perWan:0.0359, min:5000000, stock:25000000, rate:85.5, credit:2, t:78216},
+  {region:"na_west", faction:"asmo", world:"Zikel", wnum:2, multi:true, partial:false, perWan:0.0419, min:5000000, stock:50000000, rate:91.8, credit:4, t:16446},
+  {region:"na_west", faction:"elyos", world:"Nezekan", wnum:2, multi:false, partial:false, perWan:0.0314, min:1000000, stock:10000000, rate:81.5, credit:4, t:85282},
+  {region:"sa", faction:"elyos", world:"Vaizel", wnum:3, multi:true, partial:false, perWan:0.0307, min:10000000, stock:10000000, rate:85.6, credit:3, t:55114},
+  {region:"asia", faction:"elyos", world:"Hithanya", wnum:9, multi:false, partial:false, perWan:0.0330, min:1000000, stock:10000000, rate:93.8, credit:2, t:52},
+  {region:"na_west", faction:"asmo", world:"Israphel", wnum:1, multi:false, partial:false, perWan:0.0342, min:10000000, stock:50000000, rate:76.4, credit:4, t:51620},
+  {region:"na_east", faction:"asmo", world:"Triniel", wnum:3, multi:false, partial:false, perWan:0.0489, min:30000000, stock:90000000, rate:84.7, credit:2, t:27624},
+  {region:"sa", faction:"elyos", world:"Ariel", wnum:6, multi:false, partial:false, perWan:0.0388, min:1000000, stock:10000000, rate:91.8, credit:4, t:88069},
+  {region:"na_west", faction:"elyos", world:"Nezekan", wnum:2, multi:false, partial:true, perWan:0.0249, min:20000000, stock:200000000, rate:84.0, credit:2, t:97596},
+  {region:"eu", faction:"elyos", world:"Luteros", wnum:12, multi:false, partial:true, perWan:0.0488, min:30000000, stock:30000000, rate:84.7, credit:1, t:33656},
+  {region:"na_east", faction:"asmo", world:"Lumiel", wnum:4, multi:true, partial:true, perWan:0.0423, min:40000000, stock:120000000, rate:92.9, credit:2, t:93367},
+  {region:"sa", faction:"asmo", world:"Azphel", wnum:6, multi:true, partial:false, perWan:0.0371, min:40000000, stock:40000000, rate:95.5, credit:1, t:31824},
+  {region:"sa", faction:"elyos", world:"Nezekan", wnum:2, multi:false, partial:false, perWan:0.0472, min:40000000, stock:40000000, rate:90.8, credit:4, t:79057}
 ];
 var REGIONS = ["eu","asia","na_west","na_east","sa"];
 var REGION_EN = {eu:"Europe",asia:"Asia",na_west:"North America West",na_east:"North America East",sa:"South America"};
@@ -618,9 +688,21 @@ function filtered(){
     if (kw && (o.world + " " + REGION_EN[o.region] + " " + t(o.region)).toLowerCase().indexOf(kw) === -1) return false;
     return true;
   });
+  if (state.sort === "default") list.sort(function (a, b) { return ((b.rate || 0) - (a.rate || 0)) || ((b.credit || 0) - (a.credit || 0)); });
   if (state.sort === "ratio") list.sort(function (a, b) { return (nz(a.perWan) ? Infinity : a.perWan) - (nz(b.perWan) ? Infinity : b.perWan); });
-  if (state.sort === "new") list.reverse();
+  if (state.sort === "new") list.sort(function (a, b) { return (b.t || 0) - (a.t || 0); });
   return list;
+}
+function pixelAvatar(seed){
+  var h = 2166136261;
+  for (var i = 0; i < seed.length; i++) { h ^= seed.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+  var hue = h % 360, r = "";
+  for (var y = 0; y < 5; y++) for (var x = 0; x < 3; x++) {
+    h = Math.imul(h ^ (h >>> 13), 1274126177) >>> 0;
+    if (h & 1) { r += '<rect x="' + x + '" y="' + y + '" width="1" height="1"/>'; if (x < 2) r += '<rect x="' + (4 - x) + '" y="' + y + '" width="1" height="1"/>'; }
+  }
+  var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 7 7" shape-rendering="crispEdges"><rect x="-1" y="-1" width="7" height="7" fill="hsl(' + hue + ',60%,92%)"/><g fill="hsl(' + hue + ',55%,48%)">' + r + '</g></svg>';
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
 }
 function kv(parent, k, v, cls){ var d = el("div"); d.appendChild(el("span", "k", t(k) + (cur === "zh" ? "：" : ": "))); d.appendChild(el("span", cls || "v", v)); parent.appendChild(d); return d; }
 
@@ -634,7 +716,7 @@ function renderOffers(){
   list.slice((state.page - 1) * PER, state.page * PER).forEach(function (o) {
     var c = el("div", "offer");
     var c1 = el("div", "seller");
-    c1.appendChild(el("div", "ava"));
+    var av = el("img", "ava"); av.alt = ""; av.src = pixelAvatar(o.world + o.t + o.region); c1.appendChild(av);
     var si = el("div");
     kv(si, "rate_l", nz(o.rate) ? "—" : o.rate + "%");
     var cr = kv(si, "credit_l", nz(o.credit) ? "—" : "");
