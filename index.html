@@ -537,13 +537,14 @@ function render(){
   REGIONS.forEach(function (k) { r.appendChild(chip(t(k), state.region === k, function () { state.region = k; pick(); })); });
   var none = !state.region;   // nothing chosen yet: like the platform, only product type is selected
   (none ? ["all"] : FACTIONS).forEach(function (k) { f.appendChild(chip(k === "all" ? t("all") : t(k), !none && state.faction === k, function () { state.faction = k; pick(); })); });
-  w.appendChild(chip(t("all"), !none && state.world === "all", function () { state.world = "all"; state.page = 1; render(); }));
-  var list = worldsFor(state.region, state.faction), q = state.q.trim().toLowerCase();
+  var pickFac = !none && state.faction !== "all";   // platform: servers only appear after choosing a faction
+  w.appendChild(chip(t("all"), pickFac && state.world === "all", function () { state.world = "all"; state.page = 1; render(); }));
+  var list = pickFac ? worldsFor(state.region, state.faction) : null, q = state.q.trim().toLowerCase();
   if (list) list.forEach(function (x) {
     if (q && wlabel(x).toLowerCase().indexOf(q) === -1) return;
     w.appendChild(chip(wlabel(x), state.world === x[0], function () { state.world = x[0]; state.page = 1; render(); }));
   });
-  $("worldnote").hidden = !!list || none;
+  $("worldnote").hidden = !!list || !pickFac;
   $("worldbox").hidden = state.collapsed;
   $("toggle").textContent = state.collapsed ? t("expand") : t("collapse");
   $("toggle").className = "toggle" + (state.collapsed ? " closed" : "");
